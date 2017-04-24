@@ -39,6 +39,10 @@
       <keyboard-shortcut keymap="$default" first-keystroke="alt Q" second-keystroke="alt W"/>
     </action>
 
+    <action id="TextChanger" class="TextChanger" text="TextChanger" description="Change Text from current file ">
+      <add-to-group group-id="EditSelectWordGroup" anchor="first"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="alt E"/>
+    </action>
   </actions>
 
 </idea-plugin>
