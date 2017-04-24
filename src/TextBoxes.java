@@ -1,4 +1,3 @@
-package com.blogcode;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;

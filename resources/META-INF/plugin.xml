@@ -31,8 +31,14 @@
   <actions>
     <group id="MyPlugin.SampleMenu" text="_Sample Menu" description="Sample menu">
       <add-to-group group-id="MainMenu" anchor="last"  />
-      <action id="MyPlugin.Hello" class="com.blogcode.TextBoxes" text="Text _Boxes" description="A test menu item" />
+      <action id="MyPlugin.TextBoxes" class="TextBoxes" text="Text _Boxes" description="A test menu item" />
     </group>
+
+    <action id="translator.InstantTranslate" class="InstantTranslate" text="InstantTranslate from text">
+      <add-to-group group-id="ToolsMenu" anchor="first"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="alt Q" second-keystroke="alt W"/>
+    </action>
+
   </actions>
 
 </idea-plugin>
