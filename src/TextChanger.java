@@ -1,3 +1,4 @@
+import com.intellij.codeInsight.highlighting.HighlightManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -11,6 +12,7 @@ import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.awt.RelativePoint;
+import sun.security.ssl.HandshakeInStream;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 4. 24.
@@ -38,12 +40,17 @@ public class TextChanger extends AnAction {
                         Balloon.Position.atRight);
     }
 
+    private void high(Project project){
+        HighlightManager highlightManager = HighlightManager.getInstance(project);
+    }
+
     private String getSelectedMessage(AnActionEvent e) {
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
         final SelectionModel selectionModel;
 
         if (editor != null) {
             selectionModel = editor.getSelectionModel();
+
             return selectionModel.getSelectedText();
         }
 

@@ -1,12 +1,32 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url 'http://dl.bintray.com/jetbrains/intellij-plugin-service'
+        }
+
+    }
+}
+
+plugins {
+    id "org.jetbrains.intellij" version "0.2.8"
+}
+
+apply plugin: 'idea'
+apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
 
-repositories {
-    mavenCentral()
+intellij {
+    version 'IC-2017.1' //IntelliJ IDEA 2017.1 dependency; for a full list of IntelliJ IDEA releases please see https://www.jetbrains.com/intellij-repository/releases
+    plugins 'coverage' //Bundled plugin dependencies
+    pluginName 'translator'
 }
+
+group 'org.jetbrains'
+version '1.2'
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly('org.projectlombok:lombok')
 
-    testCompile 'junit:junit:4.12'
 }
-
