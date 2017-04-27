@@ -4,7 +4,6 @@ buildscript {
         maven {
             url 'http://dl.bintray.com/jetbrains/intellij-plugin-service'
         }
-
     }
 }
 
@@ -25,8 +24,6 @@ intellij {
 group 'org.jetbrains'
 version '1.2'
 
-dependencies {
-    compile group: 'junit', name: 'junit', version: '4.12'
-    compileOnly('org.projectlombok:lombok')
-
-}
+//dependencies {
+//    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
+//}
