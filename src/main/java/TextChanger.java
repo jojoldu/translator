@@ -1,6 +1,8 @@
 import com.intellij.codeInsight.highlighting.HighlightManager;
+import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.DataConstants;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
@@ -13,6 +15,8 @@ import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.awt.RelativePoint;
 import sun.security.ssl.HandshakeInStream;
+
+import javax.swing.*;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 4. 24.
@@ -29,6 +33,31 @@ public class TextChanger extends AnAction {
 
 //        Messages.showMessageDialog(project, message, "텍스트체인저", Messages.getInformationIcon());
 
+        showFromStatusBar(e, String.valueOf(showCurrentCursor(e)));
+    }
+
+    private int showCurrentCursor(AnActionEvent e){
+        Editor editor = PlatformDataKeys.EDITOR.getData(e.getDataContext());
+
+        int offset = editor.getCaretModel().getOffset();
+
+        return offset;
+    }
+
+/*
+    private void showFromFrame(Project project, String message){
+        JFrame jFrame = WindowManager.getInstance().getFrame(project);
+
+        JBPopupFactory.getInstance()
+                .createHtmlTextBalloonBuilder(message, MessageType.INFO, null)
+                .setFadeoutTime(7500)
+                .createBalloon()
+                .show(RelativePoint.getCenterOf(jFrame.getComponent()),
+                        Balloon.Position.above);
+    }
+*/
+
+    private void showFromStatusBar(AnActionEvent e, String message) {
         StatusBar statusBar = WindowManager.getInstance()
                 .getStatusBar(PlatformDataKeys.PROJECT.getData(e.getDataContext()));
 

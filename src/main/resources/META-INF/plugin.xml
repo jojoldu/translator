@@ -2,10 +2,10 @@
   <id>com.your.company.unique.plugin.id</id>
   <name>Plugin display name here</name>
   <version>1.0</version>
-  <vendor email="jojoldu@gmail.com" url="http://jojoldu.tistory.com/">jojoldu</vendor>
+  <vendor email="jojoldu@gmail.com" url="https://github.com/jojoldu">jojoldu</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
+      Translate the Text <br>
       <em>most HTML tags may be used</em>
     ]]></description>
 
@@ -35,13 +35,11 @@
     </group>
 
     <action id="translator.InstantTranslate" class="InstantTranslate" text="InstantTranslate from text">
-      <add-to-group group-id="ToolsMenu" anchor="first"/>
-      <keyboard-shortcut keymap="$default" first-keystroke="alt Q" second-keystroke="alt W"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="alt 1"/>
     </action>
 
     <action id="TextChanger" class="TextChanger" text="TextChanger" description="Change Text from current file ">
-      <add-to-group group-id="EditSelectWordGroup" anchor="first"/>
-      <keyboard-shortcut keymap="$default" first-keystroke="alt E"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="alt 2"/>
     </action>
   </actions>
 
