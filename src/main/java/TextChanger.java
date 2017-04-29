@@ -1,22 +1,20 @@
 import com.intellij.codeInsight.highlighting.HighlightManager;
-import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.DataConstants;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.awt.RelativePoint;
-import sun.security.ssl.HandshakeInStream;
 
 import javax.swing.*;
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 4. 24.
@@ -30,16 +28,40 @@ public class TextChanger extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         final Project project = e.getProject();
         String message = getSelectedMessage(e);
-
-//        Messages.showMessageDialog(project, message, "텍스트체인저", Messages.getInformationIcon());
-
-        showFromStatusBar(e, String.valueOf(showCurrentCursor(e)));
+        showPopup(message, e);
     }
 
-    private int showCurrentCursor(AnActionEvent e){
+    private void showPopup(String message, AnActionEvent e){
+
+        JComponent jComponent = getCurrentComponent(e);
+
+        if(jComponent != null){
+            JBPopupFactory.getInstance()
+                    .createHtmlTextBalloonBuilder(message, MessageType.INFO, null)
+                    .setFadeoutTime(7500)
+                    .createBalloon()
+                    .show(RelativePoint.getCenterOf(jComponent),
+                            Balloon.Position.below);
+        }
+    }
+
+    private JComponent getCurrentComponent(AnActionEvent e){
         Editor editor = PlatformDataKeys.EDITOR.getData(e.getDataContext());
 
-        int offset = editor.getCaretModel().getOffset();
+        if (editor != null) {
+            return editor.getContentComponent();
+        }
+
+        return null;
+    }
+
+    private int getCurrentCursor(AnActionEvent e){
+        Editor editor = PlatformDataKeys.EDITOR.getData(e.getDataContext());
+
+        int offset = 0;
+        if (editor != null) {
+            offset = editor.getCaretModel().getOffset();
+        }
 
         return offset;
     }
