@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
+import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.ui.popup.Balloon;
@@ -14,6 +15,7 @@ import com.intellij.ui.awt.RelativePoint;
 
 import javax.swing.*;
 import javax.swing.text.html.Option;
+import java.awt.*;
 import java.util.Optional;
 
 /**
@@ -34,13 +36,16 @@ public class TextChanger extends AnAction {
     private void showPopup(String message, AnActionEvent e){
 
         JComponent jComponent = getCurrentComponent(e);
+        Editor editor = e.getData(PlatformDataKeys.EDITOR);
+        VisualPosition visualPosition = editor.getSelectionModel().getSelectionStartPosition();
+        Point point = editor.visualPositionToXY(visualPosition);
 
         if(jComponent != null){
             JBPopupFactory.getInstance()
                     .createHtmlTextBalloonBuilder(message, MessageType.INFO, null)
                     .setFadeoutTime(7500)
                     .createBalloon()
-                    .show(RelativePoint.getCenterOf(jComponent),
+                    .show(new RelativePoint(point),
                             Balloon.Position.below);
         }
     }
@@ -53,6 +58,19 @@ public class TextChanger extends AnAction {
         }
 
         return null;
+    }
+
+    private String getSelectedMessage(AnActionEvent e) {
+        Editor editor = e.getData(PlatformDataKeys.EDITOR);
+        final SelectionModel selectionModel;
+
+        if (editor != null) {
+            selectionModel = editor.getSelectionModel();
+
+            return selectionModel.getSelectedText();
+        }
+
+        return "";
     }
 
     private int getCurrentCursor(AnActionEvent e){
@@ -89,23 +107,6 @@ public class TextChanger extends AnAction {
                 .createBalloon()
                 .show(RelativePoint.getCenterOf(statusBar.getComponent()),
                         Balloon.Position.atRight);
-    }
-
-    private void high(Project project){
-        HighlightManager highlightManager = HighlightManager.getInstance(project);
-    }
-
-    private String getSelectedMessage(AnActionEvent e) {
-        Editor editor = e.getData(PlatformDataKeys.EDITOR);
-        final SelectionModel selectionModel;
-
-        if (editor != null) {
-            selectionModel = editor.getSelectionModel();
-
-            return selectionModel.getSelectedText();
-        }
-
-        return "";
     }
 
 }
