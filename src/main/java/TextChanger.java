@@ -12,6 +12,7 @@ import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.awt.RelativePoint;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.text.html.Option;
@@ -37,17 +38,43 @@ public class TextChanger extends AnAction {
 
         JComponent jComponent = getCurrentComponent(e);
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
-        VisualPosition visualPosition = editor.getSelectionModel().getSelectionStartPosition();
-        Point point = editor.visualPositionToXY(visualPosition);
+        Point point = extractPoint(editor);
 
-        if(jComponent != null){
+        if(jComponent != null && point != null){
             JBPopupFactory.getInstance()
                     .createHtmlTextBalloonBuilder(message, MessageType.INFO, null)
                     .setFadeoutTime(7500)
                     .createBalloon()
-                    .show(new RelativePoint(point),
+                    .show(new RelativePoint(jComponent, point),
                             Balloon.Position.below);
         }
+    }
+
+    @Nullable
+    private Point extractPoint(Editor editor) {
+        Point point = null;
+
+        if (editor != null) {
+            point = editor.visualPositionToXY(makeSelectionPosition(editor));
+        }
+
+        return point;
+    }
+
+    private static final int LINE_INTERVAL = 1;
+
+    private VisualPosition makeSelectionPosition(Editor editor) {
+        VisualPosition start = editor.getSelectionModel().getSelectionStartPosition();
+        VisualPosition end = editor.getSelectionModel().getSelectionEndPosition();
+        int line = 0;
+        int column = 0;
+
+        if (end != null && start != null) {
+            line = end.getLine() + LINE_INTERVAL;
+            column = start.getColumn() + ((end.column - start.getColumn())/2);
+        }
+
+        return new VisualPosition(line, column);
     }
 
     private JComponent getCurrentComponent(AnActionEvent e){
@@ -84,18 +111,6 @@ public class TextChanger extends AnAction {
         return offset;
     }
 
-/*
-    private void showFromFrame(Project project, String message){
-        JFrame jFrame = WindowManager.getInstance().getFrame(project);
-
-        JBPopupFactory.getInstance()
-                .createHtmlTextBalloonBuilder(message, MessageType.INFO, null)
-                .setFadeoutTime(7500)
-                .createBalloon()
-                .show(RelativePoint.getCenterOf(jFrame.getComponent()),
-                        Balloon.Position.above);
-    }
-*/
 
     private void showFromStatusBar(AnActionEvent e, String message) {
         StatusBar statusBar = WindowManager.getInstance()
