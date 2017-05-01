@@ -1,3 +1,5 @@
+package action;
+
 import com.intellij.codeInsight.highlighting.HighlightManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -25,7 +27,7 @@ import java.util.Optional;
  * Github : http://github.com/jojoldu
  */
 
-public class TextChanger extends AnAction {
+public class Translator extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {

@@ -29,17 +29,8 @@
   </extensions>
 
   <actions>
-    <group id="MyPlugin.SampleMenu" text="_Sample Menu" description="Sample menu">
-      <add-to-group group-id="MainMenu" anchor="last"  />
-      <action id="MyPlugin.TextBoxes" class="TextBoxes" text="Text _Boxes" description="A test menu item" />
-    </group>
-
-    <action id="translator.InstantTranslate" class="InstantTranslate" text="InstantTranslate from text">
+    <action id="action.Translator" class="action.Translator" text="action.Translator" description="Change Text from current file ">
       <keyboard-shortcut keymap="$default" first-keystroke="alt 1"/>
-    </action>
-
-    <action id="TextChanger" class="TextChanger" text="TextChanger" description="Change Text from current file ">
-      <keyboard-shortcut keymap="$default" first-keystroke="alt 2"/>
     </action>
   </actions>
 
