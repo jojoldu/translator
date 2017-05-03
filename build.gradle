@@ -1,19 +1,25 @@
 buildscript {
     repositories {
-        mavenCentral()
-        maven {
-            url 'http://dl.bintray.com/jetbrains/intellij-plugin-service'
-        }
+        jcenter()
+        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
     }
 }
 
 plugins {
+    id "java"
     id "org.jetbrains.intellij" version "0.2.8"
 }
+
 
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
 
 intellij {
     version 'IC-2017.1' //IntelliJ IDEA 2017.1 dependency; for a full list of IntelliJ IDEA releases please see https://www.jetbrains.com/intellij-repository/releases
@@ -24,6 +30,9 @@ intellij {
 group 'org.jetbrains'
 version '1.2'
 
-//dependencies {
-//    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
-//}
+dependencies {
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
+    compile group: 'com.sun.jersey', name: 'jersey-client', version: '1.19.3'
+
+    testCompile 'junit:junit:4.12'
+}
