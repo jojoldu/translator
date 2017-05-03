@@ -9,6 +9,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.LocalDateTime;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 3.
@@ -18,9 +19,28 @@ import javax.ws.rs.core.Response;
 
 public class RestApi {
 
-    private static final String TOKEN_URL = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=";
+    private static final String TOKEN_URL = "https://api.cognitive.microsoft.com/sts/v1.0/requestToken?Subscription-Key=";
 
-    public String issueToken() {
+    private AzureToken azureToken;
+
+    public String issueToken () {
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        if(azureToken == null || azureToken.isExpired(currentTime)){
+            String token = requestToken();
+            setAzureToken(currentTime, token);
+            return token;
+        }
+
+        return azureToken.getToken();
+
+    }
+
+    private void setAzureToken(LocalDateTime createTime, String token) {
+        azureToken = new AzureToken(createTime, token);
+    }
+
+    private String requestToken() {
         final String REQUEST_URL = TOKEN_URL+ AppConfig.getSecretKey();
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -33,10 +53,11 @@ public class RestApi {
         if(response.getStatus() == 200){
             return response.readEntity(String.class);
         } else {
-            throw new RuntimeException("Issue Token Exception" +response.getStatusInfo().getReasonPhrase());
+            throw new RuntimeException("Issue Token Exception : " +response.getStatusInfo().getReasonPhrase());
         }
-
     }
+
+
 
 
 }
