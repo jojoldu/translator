@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 
 public class RestApi {
 
-    private static final String TOKEN_URL = "https://api.cognitive.microsoft.com/sts/v1.0/requestToken?Subscription-Key=";
+    private static final String TOKEN_URL = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=";
 
     private AzureToken azureToken;
 
@@ -53,7 +53,7 @@ public class RestApi {
         if(response.getStatus() == 200){
             return response.readEntity(String.class);
         } else {
-            throw new RuntimeException("Issue Token Exception : " +response.getStatusInfo().getReasonPhrase());
+            throw new RuntimeException("Issue Token Exception : " + response.getStatusInfo().getReasonPhrase());
         }
     }
 
