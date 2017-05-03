@@ -4,3 +4,4 @@
 *.iml
 out
 build
+src/main/java/config/AppConfig.java

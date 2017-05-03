@@ -32,7 +32,7 @@ version '1.2'
 
 dependencies {
     compile group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
-    compile group: 'com.sun.jersey', name: 'jersey-client', version: '1.19.3'
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.25.1'
 
     testCompile 'junit:junit:4.12'
 }
