@@ -17,12 +17,14 @@ import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.awt.RelativePoint;
 import config.AppConfig;
 import config.BeanFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 4. 24.
@@ -39,23 +41,28 @@ public class Translator extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent event) {
         String text = getSelectedMessage(event);
-        try{
 
-            TranslateRequest requestData = TranslateRequest.Builder.builder()
+        TranslateRequest requestData;
+
+        try {
+            requestData = TranslateRequest.Builder.builder()
                     .text(text)
                     .from("en")
                     .to("ko")
                     .build();
-            String translatedText = restApi.translate(requestData);
-            showPopup(translatedText, event);
 
-        } catch (Exception e){
-            logger.error("Action Performed Exception : {}", e.getMessage());
+            String translatedText = restApi.translate(requestData);
+
+            if(StringUtils.isNotBlank(translatedText)){
+                showPopup(translatedText, event);
+            }
+
+        } catch (UnsupportedEncodingException e) {
+            logger.error(e.getMessage());
         }
     }
 
     private void showPopup(String message, AnActionEvent e){
-
         JComponent jComponent = getCurrentComponent(e);
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
         Point point = extractPoint(editor);
