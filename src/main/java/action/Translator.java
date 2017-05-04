@@ -1,6 +1,7 @@
 package action;
 
-import com.intellij.codeInsight.highlighting.HighlightManager;
+import api.RestApi;
+import api.TranslateRequest;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -14,12 +15,14 @@ import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.awt.RelativePoint;
+import config.AppConfig;
+import config.BeanFactory;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import javax.swing.text.html.Option;
 import java.awt.*;
-import java.util.Optional;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 4. 24.
@@ -29,11 +32,26 @@ import java.util.Optional;
 
 public class Translator extends AnAction {
 
+    private static final Logger logger = LoggerFactory.getLogger(Translator.class);
+
+    private RestApi restApi = BeanFactory.getRestApi();
+
     @Override
-    public void actionPerformed(AnActionEvent e) {
-        final Project project = e.getProject();
-        String message = getSelectedMessage(e);
-        showPopup(message, e);
+    public void actionPerformed(AnActionEvent event) {
+        String text = getSelectedMessage(event);
+        try{
+
+            TranslateRequest requestData = TranslateRequest.Builder.builder()
+                    .text(text)
+                    .from("en")
+                    .to("ko")
+                    .build();
+            String translatedText = restApi.translate(requestData);
+            showPopup(translatedText, event);
+
+        } catch (Exception e){
+            logger.error("Action Performed Exception : {}", e.getMessage());
+        }
     }
 
     private void showPopup(String message, AnActionEvent e){
