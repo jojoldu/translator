@@ -20,8 +20,26 @@ import java.time.LocalDateTime;
 public class RestApi {
 
     private static final String TOKEN_URL = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=";
+    private static final String TRANSLATE_URL = "https://api.microsofttranslator.com/V2/Http.svc/Translate?";
 
     private AzureToken azureToken;
+
+    public String translate(TranslateRequest requestData){
+        Response response = createWebTarget(TRANSLATE_URL+requestData.toString())
+                .request()
+                .header("Authorization", "Bearer "+issueToken())
+                .get(Response.class);
+
+        if(response.getStatus() == 200){
+            return removeXmlTag(response.readEntity(String.class));
+        } else {
+            throw new RuntimeException("Translate Request Exception : " + response.getStatusInfo().getReasonPhrase());
+        }
+    }
+
+    private String removeXmlTag(String target){
+        return target.replaceAll("(<.*\">)|(</.*>)", "");
+    }
 
     public String issueToken () {
         LocalDateTime currentTime = LocalDateTime.now();
@@ -36,17 +54,8 @@ public class RestApi {
 
     }
 
-    private void setAzureToken(LocalDateTime createTime, String token) {
-        azureToken = new AzureToken(createTime, token);
-    }
-
     private String requestToken() {
-        final String REQUEST_URL = TOKEN_URL+ AppConfig.getSecretKey();
-        ClientConfig config = new ClientConfig();
-        Client client = ClientBuilder.newClient(config);
-        WebTarget target = client.target(REQUEST_URL);
-
-        Response response = target
+        Response response = createWebTarget(TOKEN_URL+ AppConfig.getSecretKey())
                 .request()
                 .post(Entity.entity("", MediaType.TEXT_PLAIN_TYPE), Response.class);
 
@@ -57,7 +66,15 @@ public class RestApi {
         }
     }
 
+    private void setAzureToken(LocalDateTime createTime, String token) {
+        azureToken = new AzureToken(createTime, token);
+    }
 
+    private WebTarget createWebTarget(String REQUEST_URL) {
+        ClientConfig config = new ClientConfig();
+        Client client = ClientBuilder.newClient(config);
+        return client.target(REQUEST_URL);
+    }
 
 
 }
