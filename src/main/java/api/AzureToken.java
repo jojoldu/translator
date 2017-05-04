@@ -13,7 +13,7 @@ public class AzureToken {
     private LocalDateTime createTime;
     private String token;
 
-    private static final long INTERVAL_TIME = 8;
+    private static final long INTERVAL_TIME = 10;
 
     public boolean isExpired(LocalDateTime currentTime){
         return currentTime.isAfter(createTime.plusMinutes(INTERVAL_TIME));
@@ -22,10 +22,6 @@ public class AzureToken {
     public AzureToken(LocalDateTime createTime, String token) {
         this.createTime = createTime;
         this.token = token;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
     }
 
     public String getToken() {

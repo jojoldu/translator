@@ -25,25 +25,34 @@ public class RestApiTest {
     }
 
     @Test
-    public void 토큰은_생성시간에서_8분이지나면_만료된다() throws Exception {
+    public void 토큰은_생성시간에서_10분이지나면_만료된다() throws Exception {
         //given
         LocalDateTime createTime = LocalDateTime.of(2017,5,4,0,0,0);
-        LocalDateTime beforeTime = LocalDateTime.of(2017, 5, 4, 0, 7, 59);
-        LocalDateTime afterTime = LocalDateTime.of(2017,5,4,0,8,1);
+        LocalDateTime beforeTime = LocalDateTime.of(2017, 5, 4, 0, 9, 59);
+        LocalDateTime afterTime = LocalDateTime.of(2017,5,4,0,10,1);
 
         AzureToken token = new AzureToken(createTime, "토큰");
 
         //then
         assertThat(token.isExpired(beforeTime), is(false));
         assertThat(token.isExpired(afterTime), is(true));
-
-
     }
 
     @Test
-    public void 토큰요청시_이전요청보다_8분이지났을때만_새로발급한다() throws Exception {
+    public void 번역요청을하면_문자열이_전달된다() throws Exception {
+        //given
         RestApi restApi = new RestApi();
-        AzureToken token;
+        TranslateRequest requestData = TranslateRequest.Builder.builder()
+                .text("brother")
+                .from("en")
+                .to("ko")
+                .build();
+
+        String result = restApi.translate(requestData);
+
+        //then
+        assertThat(result, is("동생"));
+        assertTrue(result.length() > 0);
     }
 
 }
