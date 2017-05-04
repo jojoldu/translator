@@ -32,6 +32,8 @@ version '1.2'
 
 dependencies {
     compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.25.1'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
     testCompile 'junit:junit:4.12'
 }
