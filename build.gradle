@@ -31,7 +31,6 @@ group 'org.jetbrains'
 version '1.2'
 
 dependencies {
-    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
     compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.25.1'
 
     testCompile 'junit:junit:4.12'
