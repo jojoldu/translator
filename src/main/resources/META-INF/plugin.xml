@@ -25,7 +25,7 @@
   -->
 
   <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
+    <projectConfigurable groupId="tools" displayName="Translator Plugin" id="preferences.TranslatorConfigurable" instance="config.TranslatorConfigurable" />
   </extensions>
 
   <actions>
