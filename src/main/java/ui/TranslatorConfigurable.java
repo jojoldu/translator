@@ -1,7 +1,8 @@
-package config;
+package ui;
 
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
+import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,6 +16,30 @@ import javax.swing.*;
  */
 
 public class TranslatorConfigurable implements SearchableConfigurable {
+
+    private TranslatorConfigurableGUI gui;
+    private TranslatorConfig config;
+
+    @SuppressWarnings("FieldCanBeLocal")
+    private final Project project;
+
+    public TranslatorConfigurable(@NotNull Project project) {
+        this.project = project;
+        this.config = TranslatorConfig.getInstance(project);
+    }
+
+    @Nullable
+    @Override
+    public JComponent createComponent() {
+        gui = new TranslatorConfigurableGUI();
+        gui.createUI(project);
+        return gui.getRootPanel();
+    }
+
+    @Override
+    public void disposeUIResources() {
+        gui = null;
+    }
 
     @NotNull
     @Override
@@ -34,12 +59,6 @@ public class TranslatorConfigurable implements SearchableConfigurable {
         return "preference.TranslatorConfigurable";
     }
 
-    @Nullable
-    @Override
-    public JComponent createComponent() {
-        return null;
-    }
-
     @Override
     public boolean isModified() {
         return false;
@@ -47,6 +66,6 @@ public class TranslatorConfigurable implements SearchableConfigurable {
 
     @Override
     public void apply() throws ConfigurationException {
-
+        gui.apply();
     }
 }
