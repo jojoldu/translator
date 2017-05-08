@@ -1,5 +1,6 @@
 package api;
 
+import config.AppConfig;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -19,7 +20,7 @@ public class RestApiTest {
     @Test
     public void Azure에_토큰발급요청시_문자열토큰발급() throws Exception{
         RestApi restApi = new RestApi();
-        String token = restApi.issueToken();
+        String token = restApi.issueToken(AppConfig.getSecretKey());
 
         assertTrue(token.length() > 0);
     }
@@ -48,7 +49,7 @@ public class RestApiTest {
                 .to("ko")
                 .build();
 
-        String result = restApi.translate(requestData);
+        String result = restApi.translate(requestData, AppConfig.getSecretKey());
 
         //then
         assertThat(result, is("동생"));

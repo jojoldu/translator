@@ -4,6 +4,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +36,7 @@ public class TranslatorConfigurableGUI {
         return azureSecretKeyField;
     }
 
+
     {
         $$$setupUI$$$();
     }
@@ -52,10 +54,6 @@ public class TranslatorConfigurableGUI {
         azureSecretKeyField.setEnabled(true);
         azureSecretKeyField.setHorizontalAlignment(10);
         rootPanel.add(azureSecretKeyField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setText("%FILENAME% will be replaced to actual filename without extension.");
-        label2.setVerticalAlignment(0);
-        rootPanel.add(label2, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         rootPanel.add(spacer1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         label1.setLabelFor(azureSecretKeyField);
@@ -63,5 +61,9 @@ public class TranslatorConfigurableGUI {
 
     public void apply() {
         config.setAzureSecretKey(azureSecretKeyField.getText());
+    }
+
+    public boolean isModified() {
+        return !StringUtils.equals(azureSecretKeyField.getText(), config.getAzureSecretKey());
     }
 }

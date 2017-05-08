@@ -4,6 +4,7 @@ import api.RestApi;
 import api.TranslateRequest;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
@@ -17,10 +18,12 @@ import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.awt.RelativePoint;
 import config.AppConfig;
 import config.BeanFactory;
+import config.Messages;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ui.TranslatorConfig;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,11 +40,24 @@ public class Translator extends AnAction {
     private static final Logger logger = LoggerFactory.getLogger(Translator.class);
 
     private RestApi restApi = BeanFactory.getRestApi();
+    private TranslatorConfig config;
+    private String secretKey;
 
     @Override
     public void actionPerformed(AnActionEvent event) {
-        String text = getSelectedMessage(event);
+        config = TranslatorConfig.getInstance(event.getRequiredData(CommonDataKeys.PROJECT));
+        secretKey = config.getAzureSecretKey();
 
+        if(StringUtils.isEmpty(secretKey)){
+            showPopup(Messages.EMPTY_KEY, event);
+        }else{
+            requestTranslate(event);
+        }
+
+    }
+
+    private void requestTranslate(AnActionEvent event) {
+        String text = getSelectedMessage(event);
         TranslateRequest requestData;
 
         try {
@@ -51,7 +67,7 @@ public class Translator extends AnAction {
                     .to("ko")
                     .build();
 
-            String translatedText = restApi.translate(requestData);
+            String translatedText = restApi.translate(requestData, secretKey);
 
             if(StringUtils.isNotBlank(translatedText)){
                 showPopup(translatedText, event);

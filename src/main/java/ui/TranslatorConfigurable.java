@@ -50,7 +50,7 @@ public class TranslatorConfigurable implements SearchableConfigurable {
     @Nls
     @Override
     public String getDisplayName() {
-        return "Translator Plugin";
+        return "Translator";
     }
 
     @Nullable
@@ -61,7 +61,7 @@ public class TranslatorConfigurable implements SearchableConfigurable {
 
     @Override
     public boolean isModified() {
-        return false;
+        return gui.isModified();
     }
 
     @Override

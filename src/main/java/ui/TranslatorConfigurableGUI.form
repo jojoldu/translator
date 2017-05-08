@@ -10,7 +10,9 @@
     <children>
       <component id="6fe5a" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="120" height="16"/>
+          </grid>
         </constraints>
         <properties>
           <text value="Azure Secret Key"/>
@@ -18,7 +20,9 @@
       </component>
       <vspacer id="14841">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+            <preferred-size width="120" height="14"/>
+          </grid>
         </constraints>
       </vspacer>
       <component id="11a66" class="javax.swing.JTextField" binding="azureSecretKeyField" default-binding="true">

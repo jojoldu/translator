@@ -2,10 +2,12 @@ package api;
 
 import action.Translator;
 import config.AppConfig;
+import config.Messages;
 import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.client.ClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ui.TranslatorConfig;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -29,27 +31,23 @@ public class RestApi {
 
     private AzureToken azureToken;
 
-    public String translate(TranslateRequest requestData){
+    public String translate(TranslateRequest requestData, String secretKey){
+        String token = issueToken(secretKey);
+        return removeXmlTag(requestGet(requestData, token));
+    }
 
-        String token;
-
-        try{
-            token = issueToken();
-        }catch (EmptyKeyException e){
-            return e.getMessage();
-        }
-
+    private String requestGet(TranslateRequest requestData, String token) {
         Response response = createWebTarget(TRANSLATE_URL+requestData.toString())
-                .request()
-                .header("Authorization", "Bearer "+token)
-                .get(Response.class);
+                    .request()
+                    .header("Authorization", "Bearer "+token)
+                    .get(Response.class);
 
         if(response.getStatus() != 200){
             logger.error("Translate Request Exception : {}", response.getStatusInfo().getReasonPhrase());
             return "";
         }
 
-        return removeXmlTag(response.readEntity(String.class));
+        return response.readEntity(String.class);
     }
 
     private WebTarget createWebTarget(String REQUEST_URL) {
@@ -62,11 +60,11 @@ public class RestApi {
         return target.replaceAll("(<.*\">)|(</.*>)", "");
     }
 
-    public String issueToken () {
+    public String issueToken (String secretKey) {
         LocalDateTime currentTime = LocalDateTime.now();
 
         if(azureToken == null || azureToken.isExpired(currentTime)){
-            String token = requestToken();
+            String token = requestToken(secretKey);
             setAzureToken(currentTime, token);
             return token;
         }
@@ -75,14 +73,7 @@ public class RestApi {
 
     }
 
-    private String requestToken() {
-
-        String secretKey = AppConfig.getSecretKey();
-
-        if(StringUtils.isEmpty(secretKey)){
-            throw new EmptyKeyException();
-        }
-
+    private String requestToken(String secretKey) {
         Response response = createWebTarget(TOKEN_URL+ secretKey)
                 .request()
                 .post(Entity.entity("", MediaType.TEXT_PLAIN_TYPE), Response.class);
