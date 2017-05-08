@@ -152,29 +152,4 @@ public class Translator extends AnAction {
 
         return "";
     }
-
-    private int getCurrentCursor(AnActionEvent e){
-        Editor editor = PlatformDataKeys.EDITOR.getData(e.getDataContext());
-
-        int offset = 0;
-        if (editor != null) {
-            offset = editor.getCaretModel().getOffset();
-        }
-
-        return offset;
-    }
-
-
-    private void showFromStatusBar(AnActionEvent e, String message) {
-        StatusBar statusBar = WindowManager.getInstance()
-                .getStatusBar(PlatformDataKeys.PROJECT.getData(e.getDataContext()));
-
-        JBPopupFactory.getInstance()
-                .createHtmlTextBalloonBuilder(message, MessageType.INFO, null)
-                .setFadeoutTime(7500)
-                .createBalloon()
-                .show(RelativePoint.getCenterOf(statusBar.getComponent()),
-                        Balloon.Position.atRight);
-    }
-
 }

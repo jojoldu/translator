@@ -1,17 +1,30 @@
 # translator
 
+스프링프레임워크를 비롯하여 오픈소스 코드를 추적하다보면 주석을 읽을 필요가 있습니다.  
+주석 코드를 해석하기 위해 계속해서 구글번역을 왔다갔다 하는 것이 불편하여 IDE에서 바로 번역해서 볼 수 있도록 번역 플러그인을 만들었습니다.  
+
 ## 사용법
+
+기본기능 : ```option+1```
+
+![예제](./images/예제1.gif)
 
 ### API KEY 발급
 
-구글 번역 API는 무료가 없습니다.  
-그래서 MS Azure 번역 API를 사용하였습니다.  
+구글 번역 API는 **유료**만 있습니다.  
+그래서 **MS Azure API**를 사용하였습니다.  
+(Azure의 경우 **월 200만**건 까지 무료입니다.)  
 아래 링크를 참고하여 MS Azure API Key를 발급 받아주세요  
 
 * [MS Guide](http://docs.microsofttranslator.com/text-translate.html)
 
-## 개발환경
+### API KEY 등록
 
+발급 받은 Key를 아래 위치에 등록해주세요.
+
+![설정](./images/설정.png)
+
+등록 후, 바로 기능을 사용하시면 됩니다.
 
 ## 참고
 

@@ -5,8 +5,21 @@
   <vendor email="jojoldu@gmail.com" url="https://github.com/jojoldu">jojoldu</vendor>
 
   <description><![CDATA[
-      Translate the Text <br>
-      <em>most HTML tags may be used</em>
+      <h1>Translator</h1>
+      <br/>
+      <b>
+      <a href="https://github.com/jojoldu/translator">GitHub</a>
+      </b>
+      <br/>
+      <br/>
+      MS Azure API를 이요한 번역 플러그인
+      <br/>
+      <ul>
+        <li>기본기능 : option+1</li>
+      </ul>
+      <br/>
+      <br/>
+      <i>Compiled with Java 1.8</i>
     ]]></description>
 
   <change-notes><![CDATA[
