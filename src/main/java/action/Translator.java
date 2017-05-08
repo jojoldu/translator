@@ -2,6 +2,7 @@ package action;
 
 import api.RestApi;
 import api.TranslateRequest;
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -12,12 +13,14 @@ import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.awt.RelativePoint;
 import config.BeanFactory;
 import config.Messages;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,12 +86,21 @@ public class Translator extends AnAction {
 
         if(jComponent != null && point != null){
             JBPopupFactory.getInstance()
-                    .createHtmlTextBalloonBuilder(message, MessageType.INFO, null)
+                    .createHtmlTextBalloonBuilder(toWhiteText(message), loadIcon(), Color.GRAY, null)
                     .setFadeoutTime(7500)
                     .createBalloon()
                     .show(new RelativePoint(jComponent, point),
                             Balloon.Position.below);
         }
+    }
+
+    @NotNull
+    private String toWhiteText(String message) {
+        return "<span style='color:white;'>" + message + "</span>";
+    }
+
+    private Icon loadIcon(){
+        return IconLoader.getIcon("/icons/translate.png");
     }
 
     @Nullable
