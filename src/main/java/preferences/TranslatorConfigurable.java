@@ -1,4 +1,4 @@
-package ui;
+package preferences;
 
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;

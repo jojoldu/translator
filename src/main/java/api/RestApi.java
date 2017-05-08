@@ -1,13 +1,8 @@
 package api;
 
-import action.Translator;
-import config.AppConfig;
-import config.Messages;
-import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.client.ClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ui.TranslatorConfig;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

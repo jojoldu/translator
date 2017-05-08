@@ -1,4 +1,4 @@
-package ui;
+package preferences;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.uiDesigner.core.GridConstraints;
