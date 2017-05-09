@@ -1,5 +1,7 @@
 package util;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 8.
  * Blog : http://jojoldu.tistory.com
@@ -8,11 +10,17 @@ package util;
 
 public class MessageConverter {
 
-    private static final String camelCaseRegex = "([a-z])([A-Z]+)";
+    private static final String CAMEL_CASE_REGEX = "([a-z])([A-Z]+)";
 
-    public String convert(String target) {
+    public static String convert(String target) {
         return target
-                .replaceAll(camelCaseRegex, "$1 $2")
+                .replaceAll(CAMEL_CASE_REGEX, "$1 $2")
                 .replaceAll("_", " ");
     }
+
+    @NotNull
+    public static String toWhiteText(String message) {
+        return "<span style='color:white;'>" + message + "</span>";
+    }
+
 }

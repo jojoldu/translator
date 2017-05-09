@@ -1,15 +1,12 @@
 package action;
 
 import api.RestApi;
-import util.LanguageChecker;
-import util.MessageConverter;
 import api.TranslateRequest;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
@@ -24,6 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import preferences.TranslatorConfig;
 import ui.LoadingIcon;
+import util.LanguageChecker;
+import util.MessageConverter;
+import util.SimpleIconLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +40,6 @@ public class Translator extends AnAction {
     private static final Logger logger = LoggerFactory.getLogger(Translator.class);
 
     private RestApi restApi = BeanFactory.getRestApi();
-    private MessageConverter messageConverter = BeanFactory.getMessageConverter();
     private LanguageChecker languageChecker = BeanFactory.getLanguageChecker();
 
     private TranslatorConfig config;
@@ -62,7 +61,7 @@ public class Translator extends AnAction {
 
     private void requestTranslate(AnActionEvent event) {
 
-        String text = messageConverter.convert(getSelectedMessage(event));
+        String text = MessageConverter.convert(getSelectedMessage(event));
 
         try {
             String translatedText = restApi.translate(createRequestData(text), secretKey);
@@ -94,7 +93,11 @@ public class Translator extends AnAction {
 
         if(jComponent != null && point != null){
             JBPopupFactory.getInstance()
-                    .createHtmlTextBalloonBuilder(toWhiteText(message), loadIcon(), Color.GRAY, null)
+                    .createHtmlTextBalloonBuilder(
+                            MessageConverter.toWhiteText(message),
+                            SimpleIconLoader.loadTranslateIcon(),
+                            Color.GRAY,
+                            null)
                     .setFadeoutTime(7500)
                     .createBalloon()
                     .show(new RelativePoint(jComponent, point),
@@ -102,14 +105,6 @@ public class Translator extends AnAction {
         }
     }
 
-    @NotNull
-    private String toWhiteText(String message) {
-        return "<span style='color:white;'>" + message + "</span>";
-    }
-
-    private Icon loadIcon(){
-        return IconLoader.getIcon("/icons/translate.png");
-    }
 
     @Nullable
     private Point extractPoint(Editor editor) {
