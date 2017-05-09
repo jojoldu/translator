@@ -1,4 +1,4 @@
-package api;
+package util;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 8.

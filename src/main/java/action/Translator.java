@@ -1,7 +1,8 @@
 package action;
 
 import api.RestApi;
-import api.MessageConverter;
+import util.LanguageChecker;
+import util.MessageConverter;
 import api.TranslateRequest;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -40,6 +41,8 @@ public class Translator extends AnAction {
 
     private RestApi restApi = BeanFactory.getRestApi();
     private MessageConverter messageConverter = BeanFactory.getMessageConverter();
+    private LanguageChecker languageChecker = BeanFactory.getLanguageChecker();
+
     private TranslatorConfig config;
     private String secretKey;
     private LoadingIcon loadingIcon;
@@ -51,7 +54,7 @@ public class Translator extends AnAction {
         loadingIcon = new LoadingIcon();
 
         if(StringUtils.isEmpty(secretKey)){
-            showTranslatePopup(Messages.EMPTY_KEY, event);
+            showPopup(Messages.EMPTY_KEY, event);
         }else{
             requestTranslate(event);
         }
@@ -60,27 +63,31 @@ public class Translator extends AnAction {
     private void requestTranslate(AnActionEvent event) {
 
         String text = messageConverter.convert(getSelectedMessage(event));
-        TranslateRequest requestData;
 
         try {
-            requestData = TranslateRequest.Builder.builder()
-                    .text(text)
-                    .from("en")
-                    .to("ko")
-                    .build();
-
-            String translatedText = restApi.translate(requestData, secretKey);
+            String translatedText = restApi.translate(createRequestData(text), secretKey);
 
             if(StringUtils.isNotBlank(translatedText)){
-                showTranslatePopup(translatedText.trim(), event);
+                showPopup(translatedText.trim(), event);
             }
 
         } catch (UnsupportedEncodingException e) {
-            logger.error(e.getMessage());
+            logger.error("requestTranslate : {}", e.getMessage());
         }
     }
 
-    private void showTranslatePopup(String message, AnActionEvent e){
+    @NotNull
+    private TranslateRequest createRequestData(String text) throws UnsupportedEncodingException {
+        String from = languageChecker.detect(text);
+
+        return TranslateRequest.Builder.builder()
+                .text(text)
+                .from(from)
+                .to(languageChecker.exchange(from))
+                .build();
+    }
+
+    private void showPopup(String message, AnActionEvent e){
         JComponent jComponent = getCurrentComponent(e);
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
         Point point = extractPoint(editor);
@@ -143,12 +150,8 @@ public class Translator extends AnAction {
 
     private String getSelectedMessage(AnActionEvent e) {
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
-        final SelectionModel selectionModel;
-
         if (editor != null) {
-            selectionModel = editor.getSelectionModel();
-
-            return selectionModel.getSelectedText();
+            return editor.getSelectionModel().getSelectedText();
         }
 
         return "";

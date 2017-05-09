@@ -1,6 +1,7 @@
-package api;
+package util;
 
 import org.junit.Test;
+import util.MessageConverter;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
