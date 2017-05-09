@@ -27,8 +27,9 @@ intellij {
     pluginName 'translator'
 }
 
-group 'org.jetbrains'
-version '1.2'
+group 'org.intellij.plugin.jojoldu'
+version '1.0'
+description 'Translator for IntelliJ IDEA Korean User'
 
 dependencies {
     compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.25.1'

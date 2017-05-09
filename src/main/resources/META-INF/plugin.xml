@@ -1,5 +1,5 @@
 <idea-plugin>
-  <id>com.your.company.unique.plugin.id</id>
+  <id>org.intellij.plugin.jojoldu.translator</id>
   <name>Plugin display name here</name>
   <version>1.0</version>
   <vendor email="jojoldu@gmail.com" url="https://github.com/jojoldu">jojoldu</vendor>
@@ -12,7 +12,7 @@
       </b>
       <br/>
       <br/>
-      MS Azure API를 이요한 번역 플러그인
+      MS Azure API를 이용한 번역 플러그인
       <br/>
       <ul>
         <li>기본기능 : option+1</li>
