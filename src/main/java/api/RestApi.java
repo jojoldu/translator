@@ -3,6 +3,7 @@ package api;
 import org.glassfish.jersey.client.ClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.MessageConverter;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -28,7 +29,7 @@ public class RestApi {
 
     public String translate(TranslateRequest requestData, String secretKey){
         String token = issueToken(secretKey);
-        return removeXmlTag(requestTranslate(requestData, token));
+        return MessageConverter.removeXmlTag(requestTranslate(requestData, token));
     }
 
     private String requestTranslate(TranslateRequest requestData, String token) {
@@ -51,9 +52,6 @@ public class RestApi {
         return client.target(url);
     }
 
-    private String removeXmlTag(String target){
-        return target.replaceAll("(<.*\">)|(</.*>)", "");
-    }
 
     public String issueToken (String secretKey) {
         LocalDateTime currentTime = LocalDateTime.now();

@@ -18,6 +18,12 @@ public class MessageConverter {
                 .replaceAll("_", " ");
     }
 
+    private static final String XML_REGEX = "(<.*\">)|(</.*>)";
+
+    public static String removeXmlTag(String target){
+        return target.replaceAll(XML_REGEX, "");
+    }
+
     @NotNull
     public static String toWhiteText(String message) {
         return "<span style='color:white;'>" + message + "</span>";
