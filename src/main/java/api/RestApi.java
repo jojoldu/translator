@@ -28,10 +28,10 @@ public class RestApi {
 
     public String translate(TranslateRequest requestData, String secretKey){
         String token = issueToken(secretKey);
-        return removeXmlTag(requestGet(requestData, token));
+        return removeXmlTag(requestTranslate(requestData, token));
     }
 
-    private String requestGet(TranslateRequest requestData, String token) {
+    private String requestTranslate(TranslateRequest requestData, String token) {
         Response response = createWebTarget(TRANSLATE_URL+requestData.toString())
                     .request()
                     .header("Authorization", "Bearer "+token)
@@ -45,10 +45,10 @@ public class RestApi {
         return response.readEntity(String.class);
     }
 
-    private WebTarget createWebTarget(String REQUEST_URL) {
+    private WebTarget createWebTarget(String url) {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
-        return client.target(REQUEST_URL);
+        return client.target(url);
     }
 
     private String removeXmlTag(String target){
@@ -60,12 +60,11 @@ public class RestApi {
 
         if(azureToken == null || azureToken.isExpired(currentTime)){
             String token = requestToken(secretKey);
-            setAzureToken(currentTime, token);
+            cache(currentTime, token);
             return token;
         }
 
         return azureToken.getToken();
-
     }
 
     private String requestToken(String secretKey) {
@@ -80,11 +79,8 @@ public class RestApi {
         }
     }
 
-    private void setAzureToken(LocalDateTime createTime, String token) {
+    private void cache(LocalDateTime createTime, String token) {
         azureToken = new AzureToken(createTime, token);
     }
-
-
-
 
 }

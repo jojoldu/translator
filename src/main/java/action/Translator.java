@@ -1,8 +1,8 @@
 package action;
 
 import api.RestApi;
+import api.MessageConverter;
 import api.TranslateRequest;
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -10,12 +10,9 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.VisualPosition;
-import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.util.IconLoader;
-import com.intellij.openapi.wm.StatusBar;
-import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.awt.RelativePoint;
 import config.BeanFactory;
 import config.Messages;
@@ -25,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import preferences.TranslatorConfig;
+import ui.LoadingIcon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,24 +39,27 @@ public class Translator extends AnAction {
     private static final Logger logger = LoggerFactory.getLogger(Translator.class);
 
     private RestApi restApi = BeanFactory.getRestApi();
+    private MessageConverter messageConverter = BeanFactory.getMessageConverter();
     private TranslatorConfig config;
     private String secretKey;
+    private LoadingIcon loadingIcon;
 
     @Override
     public void actionPerformed(AnActionEvent event) {
         config = TranslatorConfig.getInstance(event.getRequiredData(CommonDataKeys.PROJECT));
         secretKey = config.getAzureSecretKey();
+        loadingIcon = new LoadingIcon();
 
         if(StringUtils.isEmpty(secretKey)){
-            showPopup(Messages.EMPTY_KEY, event);
+            showTranslatePopup(Messages.EMPTY_KEY, event);
         }else{
             requestTranslate(event);
         }
-
     }
 
     private void requestTranslate(AnActionEvent event) {
-        String text = getSelectedMessage(event);
+
+        String text = messageConverter.convert(getSelectedMessage(event));
         TranslateRequest requestData;
 
         try {
@@ -71,7 +72,7 @@ public class Translator extends AnAction {
             String translatedText = restApi.translate(requestData, secretKey);
 
             if(StringUtils.isNotBlank(translatedText)){
-                showPopup(translatedText, event);
+                showTranslatePopup(translatedText.trim(), event);
             }
 
         } catch (UnsupportedEncodingException e) {
@@ -79,7 +80,7 @@ public class Translator extends AnAction {
         }
     }
 
-    private void showPopup(String message, AnActionEvent e){
+    private void showTranslatePopup(String message, AnActionEvent e){
         JComponent jComponent = getCurrentComponent(e);
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
         Point point = extractPoint(editor);

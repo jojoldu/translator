@@ -1,6 +1,7 @@
 package config;
 
 import api.RestApi;
+import api.MessageConverter;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 4.
@@ -10,9 +11,14 @@ import api.RestApi;
 
 public class BeanFactory {
 
-    private static RestApi REST_API = new RestApi();
+    private static RestApi restApi = new RestApi();
+    private static MessageConverter messageConverter = new MessageConverter();
 
     public static RestApi getRestApi() {
-        return REST_API;
+        return restApi;
+    }
+
+    public static MessageConverter getMessageConverter() {
+        return messageConverter;
     }
 }
