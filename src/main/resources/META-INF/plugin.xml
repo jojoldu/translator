@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>org.intellij.plugin.jojoldu.translator</id>
-  <name>Plugin display name here</name>
-  <version>1.0</version>
+  <name>Translator</name>
+  <version>0.0.1</version>
   <vendor email="jojoldu@gmail.com" url="https://github.com/jojoldu">jojoldu</vendor>
 
   <description><![CDATA[
@@ -23,8 +23,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      * 0.0.1: Initial release
     ]]>
   </change-notes>
 
@@ -33,9 +32,8 @@
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
-  <!-- uncomment to enable plugin in all products
+  <!-- uncomment to enable plugin in all products -->
   <depends>com.intellij.modules.lang</depends>
-  -->
 
   <extensions defaultExtensionNs="com.intellij">
     <projectConfigurable groupId="tools" displayName="Translator" id="preferences.TranslatorConfigurable" instance="preferences.TranslatorConfigurable" />
@@ -43,8 +41,12 @@
   </extensions>
 
   <actions>
-    <action id="action.Translator" class="action.Translator" text="action.Translator" description="Change Text from current file ">
+    <action id="action.Translator" class="action.Translator" text="action.Translator" description="show translated Text">
       <keyboard-shortcut keymap="$default" first-keystroke="alt 1"/>
+    </action>
+
+    <action id="action.Replacer" class="action.Replacer" text="action.Replacer" description="suggest and replace current text ">
+      <keyboard-shortcut keymap="$default" first-keystroke="alt 2"/>
     </action>
   </actions>
 

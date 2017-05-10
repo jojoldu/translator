@@ -26,7 +26,7 @@ public class MessageConverter {
 
     @NotNull
     public static String toWhiteText(String message) {
-        return "<span style='color:white;'>" + message + "</span>";
+        return "<span style='color:white;'><strong>" + message + "</strong></span>";
     }
 
 }

@@ -1,8 +1,11 @@
 package api;
 
+import config.BeanFactory;
 import org.glassfish.jersey.client.ClientConfig;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.LanguageChecker;
 import util.MessageConverter;
 
 import javax.ws.rs.client.Client;
@@ -11,6 +14,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 
 /**
@@ -25,11 +29,24 @@ public class RestApi {
     private static final String TOKEN_URL = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=";
     private static final String TRANSLATE_URL = "https://api.microsofttranslator.com/V2/Http.svc/Translate?";
 
+    private LanguageChecker languageChecker = BeanFactory.getLanguageChecker();
+
     private AzureToken azureToken;
 
-    public String translate(TranslateRequest requestData, String secretKey){
+    public String translate(String text, String secretKey) throws UnsupportedEncodingException {
         String token = issueToken(secretKey);
-        return MessageConverter.removeXmlTag(requestTranslate(requestData, token));
+        return MessageConverter.removeXmlTag(requestTranslate(createRequestData(text), token));
+    }
+
+    @NotNull
+    private TranslateRequest createRequestData(String text) throws UnsupportedEncodingException {
+        String from = languageChecker.detect(text);
+
+        return TranslateRequest.Builder.builder()
+                .text(text)
+                .from(from)
+                .to(languageChecker.exchange(from))
+                .build();
     }
 
     private String requestTranslate(TranslateRequest requestData, String token) {

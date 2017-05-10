@@ -43,17 +43,21 @@ public class RestApiTest {
     public void 번역요청을하면_문자열이_전달된다() throws Exception {
         //given
         RestApi restApi = new RestApi();
-        TranslateRequest requestData = TranslateRequest.Builder.builder()
-                .text("brother")
-                .from("en")
-                .to("ko")
-                .build();
-
-        String result = restApi.translate(requestData, AppConfig.getSecretKey());
+        String result = restApi.translate("brother", AppConfig.getSecretKey());
 
         //then
         assertThat(result, is("동생"));
         assertTrue(result.length() > 0);
     }
 
+    @Test
+    public void 한글번역요청을하면_영문자열이_전달된다() throws Exception {
+        //given
+        RestApi restApi = new RestApi();
+        String result = restApi.translate("결제 승인", AppConfig.getSecretKey());
+
+        //then
+        assertThat(result, is("Payment approval"));
+        assertTrue(result.length() > 0);
+    }
 }
