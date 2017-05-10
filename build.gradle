@@ -28,7 +28,7 @@ intellij {
 }
 
 group 'org.intellij.plugin.jojoldu'
-version '1.0'
+version '0.0.1'
 description 'Translator for IntelliJ IDEA Korean User'
 
 dependencies {
@@ -37,6 +37,7 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile group: 'com.optimaize.languagedetector', name: 'language-detector', version: '0.6'
+    compile group: 'com.google.guava', name: 'guava', version: '21.0'
 
     testCompile 'junit:junit:4.12'
 }
