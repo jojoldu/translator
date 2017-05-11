@@ -1,6 +1,8 @@
-package api;
+package service;
 
+import service.impl.RestTemplateImpl;
 import config.AppConfig;
+import dto.AzureToken;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -15,11 +17,11 @@ import static org.junit.Assert.assertTrue;
  * Github : http://github.com/jojoldu
  */
 
-public class RestApiTest {
+public class RestTemplateTest {
 
     @Test
     public void Azure에_토큰발급요청시_문자열토큰발급() throws Exception{
-        RestApi restApi = new RestApi();
+        RestTemplateImpl restApi = new RestTemplateImpl();
         String token = restApi.issueToken(AppConfig.getSecretKey());
 
         assertTrue(token.length() > 0);
@@ -42,7 +44,7 @@ public class RestApiTest {
     @Test
     public void 번역요청을하면_문자열이_전달된다() throws Exception {
         //given
-        RestApi restApi = new RestApi();
+        RestTemplateImpl restApi = new RestTemplateImpl();
         String result = restApi.translate("brother", AppConfig.getSecretKey());
 
         //then
@@ -53,7 +55,7 @@ public class RestApiTest {
     @Test
     public void 한글번역요청을하면_영문자열이_전달된다() throws Exception {
         //given
-        RestApi restApi = new RestApi();
+        RestTemplateImpl restApi = new RestTemplateImpl();
         String result = restApi.translate("결제 승인", AppConfig.getSecretKey());
 
         //then

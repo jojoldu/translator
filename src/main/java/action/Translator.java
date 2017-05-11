@@ -1,15 +1,15 @@
 package action;
 
-import api.RestApi;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import config.BeanFactory;
-import config.Messages;
+import com.intellij.openapi.components.ServiceManager;
+import util.constant.Messages;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import preferences.TranslatorConfig;
+import service.RestTemplate;
 import util.MessageConverter;
 import util.PopupLoader;
 import util.Selector;
@@ -25,8 +25,6 @@ import java.io.UnsupportedEncodingException;
 public class Translator extends AnAction {
 
     private static final Logger logger = LoggerFactory.getLogger(Translator.class);
-
-    private RestApi restApi = BeanFactory.getRestApi();
 
     private TranslatorConfig config;
     private String secretKey;
@@ -46,9 +44,9 @@ public class Translator extends AnAction {
     private void requestTranslate(AnActionEvent event) {
 
         String text = MessageConverter.convert(Selector.getSelectedMessage(event));
-
+        RestTemplate restTemplate = ServiceManager.getService(RestTemplate.class);
         try {
-            String translatedText = restApi.translate(text, secretKey);
+            String translatedText = restTemplate.translate(text, secretKey);
 
             if(StringUtils.isNotBlank(translatedText)){
                 PopupLoader.show(translatedText.trim(), event);

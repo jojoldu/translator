@@ -1,4 +1,4 @@
-package api;
+package dto;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

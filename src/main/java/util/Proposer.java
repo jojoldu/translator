@@ -1,9 +1,9 @@
 package util;
 
 import com.google.common.base.CaseFormat;
-import config.BeanFactory;
+import com.intellij.openapi.components.ServiceManager;
+import service.LanguageChecker;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -16,8 +16,6 @@ import java.util.List;
 
 public class Proposer {
 
-    private LanguageChecker languageChecker = BeanFactory.getLanguageChecker();
-
     public List<String> propose(String text) {
         if(isEnglish(text)){
             return createPropositions(text.replaceAll(" ", "_").toLowerCase());
@@ -27,7 +25,8 @@ public class Proposer {
     }
 
     private boolean isEnglish(String text) {
-        return languageChecker.detect(text).equals("en");
+
+        return ServiceManager.getService(LanguageChecker.class).detect(text).equals("en");
     }
 
     private List<String> createPropositions(String text){

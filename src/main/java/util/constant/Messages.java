@@ -1,4 +1,4 @@
-package config;
+package util.constant;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 8.

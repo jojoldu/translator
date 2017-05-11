@@ -1,5 +1,6 @@
-package util;
+package service;
 
+import service.impl.LanguageCheckerImpl;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertThat;
 
 public class LanguageCheckerTest {
 
-    private LanguageChecker checker = new LanguageChecker();
+    private LanguageCheckerImpl checker = new LanguageCheckerImpl();
 
     @Test
     public void 영문을_입력하면_en이_리턴된다() throws Exception {

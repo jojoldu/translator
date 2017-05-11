@@ -1,5 +1,6 @@
-package util;
+package service.impl;
 
+import service.LanguageChecker;
 import com.google.common.base.Optional;
 import com.optimaize.langdetect.LanguageDetector;
 import com.optimaize.langdetect.LanguageDetectorBuilder;
@@ -20,26 +21,27 @@ import java.io.IOException;
  * Github : http://github.com/jojoldu
  */
 
-public class LanguageChecker {
-    private static final Logger logger = LoggerFactory.getLogger(LanguageChecker.class);
+public class LanguageCheckerImpl implements LanguageChecker {
+    private static final Logger logger = LoggerFactory.getLogger(LanguageCheckerImpl.class);
 
     private LanguageDetector languageDetector;
     private TextObjectFactory textObjectFactory;
 
-    public LanguageChecker() {
+    public LanguageCheckerImpl() {
         //build language detector:
         try {
             languageDetector = LanguageDetectorBuilder.create(NgramExtractors.standard())
                     .withProfiles(new LanguageProfileReader().readAllBuiltIn()) //load all languages:
                     .build();
         } catch (IOException e) {
-            logger.error("LanguageChecker {}", e.getMessage());
+            logger.error("LanguageCheckerImpl {}", e.getMessage());
         }
 
         //create a text object factory
         textObjectFactory = CommonTextObjectFactories.forDetectingOnLargeText();
     }
 
+    @Override
     public String detect(String text) {
         //query:
         TextObject textObject = textObjectFactory.forText(text);
@@ -52,6 +54,7 @@ public class LanguageChecker {
         return "en";
     }
 
+    @Override
     public String exchange(String language) {
 
         if("en".equals(language)){

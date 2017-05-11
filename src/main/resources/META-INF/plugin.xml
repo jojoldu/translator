@@ -50,4 +50,9 @@
     </action>
   </actions>
 
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationService serviceInterface="service.RestTemplate" serviceImplementation="service.impl.RestTemplateImpl"/>
+    <applicationService serviceInterface="service.LanguageChecker" serviceImplementation="service.impl.LanguageCheckerImpl"/>
+  </extensions>
+
 </idea-plugin>

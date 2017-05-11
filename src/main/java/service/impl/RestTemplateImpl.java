@@ -1,11 +1,14 @@
-package api;
+package service.impl;
 
-import config.BeanFactory;
+import com.intellij.openapi.components.ServiceManager;
+import service.LanguageChecker;
+import service.RestTemplate;
+import dto.AzureToken;
+import dto.TranslateRequest;
 import org.glassfish.jersey.client.ClientConfig;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.LanguageChecker;
 import util.MessageConverter;
 
 import javax.ws.rs.client.Client;
@@ -23,16 +26,15 @@ import java.time.LocalDateTime;
  * Github : http://github.com/jojoldu
  */
 
-public class RestApi {
-    private static final Logger logger = LoggerFactory.getLogger(RestApi.class);
+public class RestTemplateImpl implements RestTemplate {
+    private static final Logger logger = LoggerFactory.getLogger(RestTemplateImpl.class);
 
     private static final String TOKEN_URL = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=";
     private static final String TRANSLATE_URL = "https://api.microsofttranslator.com/V2/Http.svc/Translate?";
 
-    private LanguageChecker languageChecker = BeanFactory.getLanguageChecker();
-
     private AzureToken azureToken;
 
+    @Override
     public String translate(String text, String secretKey) throws UnsupportedEncodingException {
         String token = issueToken(secretKey);
         return MessageConverter.removeXmlTag(requestTranslate(createRequestData(text), token));
@@ -40,6 +42,7 @@ public class RestApi {
 
     @NotNull
     private TranslateRequest createRequestData(String text) throws UnsupportedEncodingException {
+        LanguageChecker languageChecker = ServiceManager.getService(LanguageChecker.class);
         String from = languageChecker.detect(text);
 
         return TranslateRequest.Builder.builder()
@@ -69,7 +72,7 @@ public class RestApi {
         return client.target(url);
     }
 
-
+    @Override
     public String issueToken (String secretKey) {
         LocalDateTime currentTime = LocalDateTime.now();
 
