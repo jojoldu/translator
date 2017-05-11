@@ -1,6 +1,7 @@
 package util;
 
 import org.junit.Test;
+import service.impl.ProposerImpl;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 
 public class ProposerTest {
-    private Proposer proposer = new Proposer();
+    private ProposerImpl proposer = new ProposerImpl();
 
     @Test
     public void 영문은_카멜케이스_언더스코어로_전환한_리스트를_반환한다() throws Exception {

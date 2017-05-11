@@ -53,6 +53,7 @@
   <extensions defaultExtensionNs="com.intellij">
     <applicationService serviceInterface="service.RestTemplate" serviceImplementation="service.impl.RestTemplateImpl"/>
     <applicationService serviceInterface="service.LanguageChecker" serviceImplementation="service.impl.LanguageCheckerImpl"/>
+    <applicationService serviceInterface="service.Proposer" serviceImplementation="service.impl.ProposerImpl"/>
   </extensions>
 
 </idea-plugin>

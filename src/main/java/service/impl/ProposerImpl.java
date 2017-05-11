@@ -1,8 +1,9 @@
-package util;
+package service.impl;
 
 import com.google.common.base.CaseFormat;
 import com.intellij.openapi.components.ServiceManager;
 import service.LanguageChecker;
+import service.Proposer;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,7 +15,7 @@ import java.util.List;
  * Github : http://github.com/jojoldu
  */
 
-public class Proposer {
+public class ProposerImpl implements Proposer{
 
     public List<String> propose(String text) {
         if(isEnglish(text)){
@@ -25,7 +26,6 @@ public class Proposer {
     }
 
     private boolean isEnglish(String text) {
-
         return ServiceManager.getService(LanguageChecker.class).detect(text).equals("en");
     }
 

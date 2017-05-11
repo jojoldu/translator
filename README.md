@@ -9,7 +9,13 @@
 
 단축키 : ```option+1```
 
-![예제](./images/예제1.gif)
+![예제1](./images/예제1.gif)
+
+### 번역 및 변환
+
+단축키 : ```option+2```
+
+![에제2](./images/예제2.gif)
 
 ### API KEY 발급
 
