@@ -1,11 +1,13 @@
 package service;
 
+import dto.TranslateRequest;
 import service.impl.RestTemplateImpl;
 import config.AppConfig;
 import dto.AzureToken;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -45,7 +47,7 @@ public class RestTemplateTest {
     public void 번역요청을하면_문자열이_전달된다() throws Exception {
         //given
         RestTemplateImpl restApi = new RestTemplateImpl();
-        String result = restApi.translate("brother", AppConfig.getSecretKey());
+        String result = restApi.translateSingleResult("brother", AppConfig.getSecretKey());
 
         //then
         assertThat(result, is("동생"));
@@ -56,10 +58,28 @@ public class RestTemplateTest {
     public void 한글번역요청을하면_영문자열이_전달된다() throws Exception {
         //given
         RestTemplateImpl restApi = new RestTemplateImpl();
-        String result = restApi.translate("결제 승인", AppConfig.getSecretKey());
+        String result = restApi.translateSingleResult("결제 승인", AppConfig.getSecretKey());
 
         //then
         assertThat(result, is("Payment approval"));
         assertTrue(result.length() > 0);
+    }
+
+    @Test
+    public void 여러개의_결과값반환() throws Exception {
+        //given
+        RestTemplateImpl restApi = new RestTemplateImpl();
+        TranslateRequest request = TranslateRequest.Builder.builder()
+                .text("고용하다")
+                .from("ko")
+                .to("en")
+                .maxTranslations(5)
+                .build();
+
+        String token = restApi.issueToken(AppConfig.getSecretKey());
+        String result = restApi.requestTranslateMultiResults(request, token);
+
+        //then
+        System.out.println(result);
     }
 }

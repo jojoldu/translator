@@ -1,6 +1,7 @@
 package service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 11.
@@ -9,6 +10,7 @@ import java.io.UnsupportedEncodingException;
  */
 
 public interface RestTemplate {
-    String translate(String text, String secretKey) throws UnsupportedEncodingException;
+    String translateSingleResult(String text, String secretKey) throws UnsupportedEncodingException;
+    List<String> translateMultiResults(String text, String secretKey) throws UnsupportedEncodingException;
     String issueToken (String secretKey);
 }

@@ -1,14 +1,14 @@
 package service.impl;
 
 import com.intellij.openapi.components.ServiceManager;
-import service.LanguageChecker;
-import service.RestTemplate;
 import dto.AzureToken;
 import dto.TranslateRequest;
 import org.glassfish.jersey.client.ClientConfig;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.LanguageChecker;
+import service.RestTemplate;
 import util.MessageConverter;
 
 import javax.ws.rs.client.Client;
@@ -19,6 +19,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 3.
@@ -31,17 +34,33 @@ public class RestTemplateImpl implements RestTemplate {
 
     private static final String TOKEN_URL = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=";
     private static final String TRANSLATE_URL = "https://api.microsofttranslator.com/V2/Http.svc/Translate?";
+    private static final String TRANSLATE_ALL_URL = "https://api.microsofttranslator.com/V2/Http.svc/GetTranslations?";
+    private static final Integer MAX_TRANSLATION_SIZE = 5;
 
     private AzureToken azureToken;
 
     @Override
-    public String translate(String text, String secretKey) throws UnsupportedEncodingException {
+    public String translateSingleResult(String text, String secretKey) throws UnsupportedEncodingException {
         String token = issueToken(secretKey);
-        return MessageConverter.removeXmlTag(requestTranslate(createRequestData(text), token));
+        TranslateRequest requestData = createRequestData(text, null);
+
+        return MessageConverter.removeXmlTag(requestTranslateSingleResult(requestData, token));
     }
 
+    @Override
+    public List<String> translateMultiResults(String text, String secretKey) throws UnsupportedEncodingException {
+        String token = issueToken(secretKey);
+
+        TranslateRequest requestData = createRequestData(text, MAX_TRANSLATION_SIZE);
+//        return requestTranslateMultiResults(requestData, token).stream()
+//                .map(MessageConverter::removeXmlTag)
+//                .collect(Collectors.toList());
+        return null;
+    }
+
+
     @NotNull
-    private TranslateRequest createRequestData(String text) throws UnsupportedEncodingException {
+    private TranslateRequest createRequestData(String text, Integer size) throws UnsupportedEncodingException {
         LanguageChecker languageChecker = ServiceManager.getService(LanguageChecker.class);
         String from = languageChecker.detect(text);
 
@@ -49,10 +68,11 @@ public class RestTemplateImpl implements RestTemplate {
                 .text(text)
                 .from(from)
                 .to(languageChecker.exchange(from))
+                .maxTranslations(size)
                 .build();
     }
 
-    private String requestTranslate(TranslateRequest requestData, String token) {
+    private String requestTranslateSingleResult(TranslateRequest requestData, String token) {
         Response response = createWebTarget(TRANSLATE_URL+requestData.toString())
                     .request()
                     .header("Authorization", "Bearer "+token)
@@ -65,6 +85,22 @@ public class RestTemplateImpl implements RestTemplate {
 
         return response.readEntity(String.class);
     }
+
+    public String requestTranslateMultiResults(TranslateRequest requestData, String token) {
+
+        Response response = createWebTarget(TRANSLATE_ALL_URL+requestData.toString())
+                .request()
+                .header("Authorization", "Bearer "+token)
+                .post(Entity.entity("", MediaType.TEXT_PLAIN_TYPE), Response.class);
+
+        if(response.getStatus() != 200){
+            logger.error("Translate Request Multi Results Exception : {}", response.getStatusInfo().getReasonPhrase());
+            return "";
+        }
+
+        return response.readEntity(String.class);
+    }
+
 
     private WebTarget createWebTarget(String url) {
         ClientConfig config = new ClientConfig();

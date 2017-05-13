@@ -3,7 +3,6 @@ package action;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInsight.lookup.LookupManager;
-import com.intellij.notification.Notification;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -17,15 +16,10 @@ import org.slf4j.LoggerFactory;
 import preferences.TranslatorConfig;
 import service.Proposer;
 import service.RestTemplate;
-import ui.LoadingComponent;
 import util.MessageConverter;
-import util.PopupLoader;
 import util.Selector;
-import util.constant.Messages;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 10.
@@ -68,7 +62,7 @@ public class Replacer extends AnAction{
         RestTemplate restTemplate = ServiceManager.getService(RestTemplate.class);
 
         try {
-            return restTemplate.translate(text, secretKey);
+            return restTemplate.translateSingleResult(text, secretKey);
         } catch (UnsupportedEncodingException e) {
             logger.error("requestTranslate : {}", e.getMessage());
         }

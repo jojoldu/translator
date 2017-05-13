@@ -6,7 +6,6 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.components.ServiceManager;
 import config.AppConfig;
 import ui.LoadingComponent;
-import util.constant.Messages;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +54,7 @@ public class Translator extends AnAction {
         String text = MessageConverter.convert(Selector.getSelectedMessage(event));
         RestTemplate restTemplate = ServiceManager.getService(RestTemplate.class);
         try {
-            String translatedText = restTemplate.translate(text, secretKey);
+            String translatedText = restTemplate.translateSingleResult(text, secretKey);
 
             if(StringUtils.isNotBlank(translatedText)){
                 PopupLoader.show(translatedText.trim(), event);
