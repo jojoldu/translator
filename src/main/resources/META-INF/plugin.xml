@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>org.intellij.plugin.jojoldu.translator</id>
   <name>Translator</name>
-  <version>0.0.2</version>
+  <version>0.0.4</version>
   <vendor email="jojoldu@gmail.com" url="https://github.com/jojoldu">jojoldu</vendor>
 
   <description><![CDATA[
@@ -24,8 +24,12 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      * 0.0.1: 첫 배포
-      * 0.0.2: 번역 & 변환 기능 추가
+       <ul>
+        <li>0.0.1: 첫 배포</li>
+        <li>0.0.2: 번역 & 변환 기능 추가</li>
+        <li>0.0.3: 설치 버그 수정</li>
+        <li>0.0.4: 로딩 팝업 추가</li>
+      </ul>
     ]]>
   </change-notes>
 
