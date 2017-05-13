@@ -1,9 +1,14 @@
 package ui;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.ui.popup.Balloon;
+import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.ui.awt.RelativePoint;
 import com.intellij.util.ui.AnimatedIcon;
 import org.jetbrains.annotations.Nullable;
+import util.Selector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,23 +19,40 @@ import java.awt.*;
  * Github : http://github.com/jojoldu
  */
 
-public class LoadingComponent extends DialogWrapper{
+public class LoadingComponent {
 
-    {
-        init();
+    private AnActionEvent e;
+    private Balloon balloon;
+
+    public LoadingComponent(@Nullable AnActionEvent e) {
+        this.e = e;
     }
 
-    public LoadingComponent(@Nullable Project project) {
-        super(project);
-    }
-
-    @Nullable
-    @Override
-    protected JComponent createCenterPanel() {
+    private JComponent createPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         AnimatedIcon loadingIcon = new LoadingIcon();
         loadingIcon.resume();
         panel.add(loadingIcon, BorderLayout.CENTER);
         return panel;
     }
+
+    public void show(){
+        JComponent jComponent = Selector.getCurrentComponent(e);
+        Editor editor = e.getData(PlatformDataKeys.EDITOR);
+        Point point = Selector.extractPoint(editor);
+
+        if (jComponent != null && point != null) {
+            balloon = JBPopupFactory.getInstance()
+                    .createBalloonBuilder(createPanel())
+                    .createBalloon();
+
+            balloon.show(new RelativePoint(jComponent, point),
+                            Balloon.Position.below);
+        }
+    }
+
+    public void hide(){
+        balloon.hide();
+    }
+
 }

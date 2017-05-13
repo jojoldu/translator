@@ -5,6 +5,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.components.ServiceManager;
 import config.AppConfig;
+import ui.LoadingComponent;
 import util.constant.Messages;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -29,11 +30,14 @@ public class Translator extends AnAction {
 
     private TranslatorConfig config;
     private String secretKey;
+    private LoadingComponent loadingComponent;
 
     @Override
     public void actionPerformed(AnActionEvent e) {
         config = TranslatorConfig.getInstance(e.getRequiredData(CommonDataKeys.PROJECT));
         secretKey = config.getAzureSecretKey();
+        loadingComponent = new LoadingComponent(e);
+        loadingComponent.show();
 
         if(StringUtils.isEmpty(secretKey)){
             secretKey = AppConfig.getSecretKey();
@@ -42,6 +46,8 @@ public class Translator extends AnAction {
         }else{
             requestTranslate(e);
         }
+
+        loadingComponent.hide();
     }
 
     private void requestTranslate(AnActionEvent event) {
