@@ -1,4 +1,4 @@
-# translator (IntelliJ 번역 플러그인)
+# translator - IntelliJ 번역 플러그인
 
 주석 해석, 변수명 찾기 등 개발 중 번역기를 사용하는 일이 빈번합니다.  
 구글 번역창, 네이버 사전을 항상 열어놓는것도 귀찮아 번역 플러그인 제작을 시작하였습니다.
@@ -17,13 +17,19 @@
 
 ![에제2](./images/예제2.gif)
 
+## 설치 및 설정
+
+### 설치
+
+![설치](./images/설치.png)
+
 ### API KEY 발급
 
 구글 번역 API는 **유료**만 있습니다.  
 그래서 **MS Azure API**를 사용하였습니다.  
 (Azure의 경우 **월 200만**건 까지 무료입니다.)  
 아래 링크를 참고하여 MS Azure API Key를 발급 받아주세요  
-(등록하지 않을 경우 월 200 쿼리만 실행 가능합니다.)
+(등록하지 않을 경우 월 1000 쿼리만 실행 가능합니다.)
 
 * [MS Guide](http://docs.microsofttranslator.com/text-translate.html)
 

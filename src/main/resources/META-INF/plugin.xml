@@ -24,12 +24,15 @@
     ]]></description>
 
   <change-notes><![CDATA[
-       <ul>
+
+      <a href="https://github.com/jojoldu/translator/tree/0.0.4"><b>v0.0.4</b></a> (2017-05-16) <br/><br/>
+      <ul>
         <li>0.0.1: 첫 배포</li>
         <li>0.0.2: 번역 & 변환 기능 추가</li>
         <li>0.0.3: 설치 버그 수정</li>
         <li>0.0.4: 로딩 팝업 추가</li>
-      </ul>
+     </ul>
+
     ]]>
   </change-notes>
 
@@ -40,6 +43,7 @@
        on how to target different products -->
   <!-- uncomment to enable plugin in all products -->
   <depends>com.intellij.modules.lang</depends>
+  <depends>com.intellij.modules.java</depends>
 
   <extensions defaultExtensionNs="com.intellij">
     <projectConfigurable groupId="tools" displayName="Translator" id="preferences.TranslatorConfigurable" instance="preferences.TranslatorConfigurable" />
