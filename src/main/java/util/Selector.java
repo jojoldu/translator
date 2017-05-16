@@ -3,7 +3,9 @@ package util;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.VisualPosition;
+import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -54,12 +56,19 @@ public class Selector {
         return null;
     }
 
-    public static String getSelectedMessage(AnActionEvent e) {
+    public static String getSelectedText(AnActionEvent e) {
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
         if (editor != null) {
-            return editor.getSelectionModel().getSelectedText();
+            SelectionModel selectionModel = editor.getSelectionModel();
+            String selectedText = selectionModel.getSelectedText();
+            return StringUtils.isNotEmpty(selectedText)? selectedText : getAutoSelectedText(selectionModel);
         }
 
         return "";
+    }
+
+    private static String getAutoSelectedText(SelectionModel selectionModel){
+        selectionModel.selectWordAtCaret(false);
+        return selectionModel.getSelectedText();
     }
 }

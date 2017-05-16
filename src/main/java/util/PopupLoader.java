@@ -6,16 +6,13 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.ui.awt.RelativePoint;
-import util.MessageConverter;
-import util.Selector;
-import util.SimpleIconLoader;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class PopupLoader {
 
-    public static void show(String message, AnActionEvent e) {
+    public static void show(String text, String translatedText, AnActionEvent e) {
         JComponent jComponent = Selector.getCurrentComponent(e);
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
         Point point = Selector.extractPoint(editor);
@@ -23,8 +20,8 @@ public class PopupLoader {
         if (jComponent != null && point != null) {
             JBPopupFactory.getInstance()
                     .createHtmlTextBalloonBuilder(
-                            MessageConverter.toWhiteText(message),
-                            SimpleIconLoader.loadTranslateIcon(),
+                            MessageConverter.applyStyle(text, translatedText),
+                            null,
                             Color.GRAY,
                             null)
                     .setFadeoutTime(7500)

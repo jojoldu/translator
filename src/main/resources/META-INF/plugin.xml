@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>org.intellij.plugin.jojoldu.translator</id>
   <name>Translator</name>
-  <version>0.0.4</version>
+  <version>0.0.5</version>
   <vendor email="jojoldu@gmail.com" url="https://github.com/jojoldu">jojoldu</vendor>
 
   <description><![CDATA[
@@ -31,6 +31,7 @@
         <li>0.0.2: 번역 & 변환 기능 추가</li>
         <li>0.0.3: 설치 버그 수정</li>
         <li>0.0.4: 로딩 팝업 추가</li>
+        <li>0.0.5: 선택영역 없을 경우 영역 자동 선택 기능 추가</li>
      </ul>
 
     ]]>
