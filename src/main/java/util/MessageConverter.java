@@ -27,7 +27,7 @@ public class MessageConverter {
     @NotNull
     public static String applyStyle(String text, String translatedText) {
         //DarkOrange
-        String title = "<p style='color:#FF8C00;font-size:16px'><strong>" + text + "</strong></p>";
+        String title = "<p style='text-align:left;color:#FF8C00;font-size:16px'><strong>" + text + "</strong></p>";
         String content = "<p style='color:#F8F8FF;font-size:12px'>" + translatedText + "</p>";
         return title+content;
     }

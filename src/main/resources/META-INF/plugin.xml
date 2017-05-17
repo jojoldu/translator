@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>org.intellij.plugin.jojoldu.translator</id>
   <name>Translator</name>
-  <version>0.0.5</version>
+  <version>0.0.6</version>
   <vendor email="jojoldu@gmail.com" url="https://github.com/jojoldu">jojoldu</vendor>
 
   <description><![CDATA[
@@ -12,11 +12,11 @@
       </b>
       <br/>
       <br/>
-      MS Azure API를 이용한 번역 플러그인
+      Translation plugin <strong>For Korean User</strong>
       <br/>
       <ul>
-        <li>기본 번역 : option+1</li>
-        <li>번역 및 변환 : option+2</li>
+        <li>Translate : option+1</li>
+        <li>Translate & Replace : option+2</li>
       </ul>
       <br/>
       <br/>
@@ -24,16 +24,15 @@
     ]]></description>
 
   <change-notes><![CDATA[
-
-      <a href="https://github.com/jojoldu/translator/tree/0.0.4"><b>v0.0.4</b></a> (2017-05-16) <br/><br/>
+      <a href="https://github.com/jojoldu/translator/tree/0.0.6"><b>v0.0.6</b></a> (2017-05-16) <br/><br/>
       <ul>
-        <li>0.0.1: 첫 배포</li>
-        <li>0.0.2: 번역 & 변환 기능 추가</li>
-        <li>0.0.3: 설치 버그 수정</li>
-        <li>0.0.4: 로딩 팝업 추가</li>
-        <li>0.0.5: 선택영역 없을 경우 영역 자동 선택 기능 추가</li>
-     </ul>
-
+        <li>0.0.1: Project initiate</li>
+        <li>0.0.2: Add Translate & Replace feature</li>
+        <li>0.0.3: Bug fix</li>
+        <li>0.0.4: Add Loading Popup</li>
+        <li>0.0.5: Add Auto Select Feature</li>
+        <li>0.0.6: Async Translate Event</li>
+      </ul>
     ]]>
   </change-notes>
 
@@ -44,7 +43,6 @@
        on how to target different products -->
   <!-- uncomment to enable plugin in all products -->
   <depends>com.intellij.modules.lang</depends>
-  <depends>com.intellij.modules.java</depends>
 
   <extensions defaultExtensionNs="com.intellij">
     <projectConfigurable groupId="tools" displayName="Translator" id="preferences.TranslatorConfigurable" instance="preferences.TranslatorConfigurable" />
@@ -52,11 +50,11 @@
   </extensions>
 
   <actions>
-    <action id="action.Translator" class="action.Translator" text="action.Translator" description="show translated Text">
+    <action id="action.impl.Translator" class="action.impl.Translator" text="action.impl.Translator" description="show translated Text">
       <keyboard-shortcut keymap="$default" first-keystroke="alt 1"/>
     </action>
 
-    <action id="action.Replacer" class="action.Replacer" text="action.Replacer" description="suggest and replace current text ">
+    <action id="action.impl.Replacer" class="action.impl.Replacer" text="action.impl.Replacer" description="suggest and replace current text ">
       <keyboard-shortcut keymap="$default" first-keystroke="alt 2"/>
     </action>
   </actions>
