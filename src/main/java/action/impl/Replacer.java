@@ -5,7 +5,9 @@ import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInsight.lookup.LookupManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.editor.Editor;
 import org.slf4j.Logger;
@@ -18,28 +20,22 @@ import service.Proposer;
  * Github : http://github.com/jojoldu
  */
 
-public class Replacer extends TranslateAction{
+public class Replacer extends TranslateAction {
     private static final Logger logger = LoggerFactory.getLogger(Replacer.class);
 
     private Editor editor;
-    private LookupManager lookupManager;
 
     @Override
     protected void init(AnActionEvent e) {
-        editor = e.getData(PlatformDataKeys.EDITOR);
+        editor = CommonDataKeys.EDITOR.getData(e.getDataContext());
     }
 
     @Override
     protected void action(String text, String translatedText) {
-
         if(editor != null && editor.getProject() != null){
-            lookupManager = LookupManager.getInstance(editor.getProject());
-            lookupManager.showLookup(editor, getProposeList(translatedText));
+            LookupManager lookupManager = LookupManager.getInstance(editor.getProject());
+            ApplicationManager.getApplication().invokeLater(() -> lookupManager.showLookup(editor, getProposeList(translatedText)));
         }
-
-//        if(lookupManager != null){
-//            lookupManager.showLookup(editor, getProposeList(translatedText));
-//        }
     }
 
     private LookupElement[] getProposeList(String text){
