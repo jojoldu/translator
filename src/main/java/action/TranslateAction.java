@@ -32,7 +32,7 @@ public abstract class TranslateAction extends AnAction{
     @Override
     public void actionPerformed(AnActionEvent e) {
         config = TranslatorConfig.getInstance(e.getRequiredData(CommonDataKeys.PROJECT));
-        secretKey = StringUtils.isEmpty(config.getAzureSecretKey())? config.getAzureSecretKey(): AppConfig.getSecretKey();
+        secretKey = StringUtils.isNotEmpty(config.getAzureSecretKey())? config.getAzureSecretKey(): AppConfig.getSecretKey();
 
         // 초기값 세팅
         init(e);
