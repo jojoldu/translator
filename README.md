@@ -9,13 +9,29 @@
 
 단축키 : ```option+1```
 
-![예제1](./images/예제1.gif)
+![예제1](./images/번역.gif)
 
 ### 번역 및 변환
 
 단축키 : ```option+2```
 
-![에제2](./images/예제2.gif)
+![에제2](./images/변경.gif)
+
+### 자동 선택모드 지원
+
+**영역 선택할 경우**
+
+![영역선택](./images/영역지정.gif)
+
+**영역 선택하지 않을 경우**
+
+![영역자동](./images/영역자동.gif)
+
+
+### 자동 언어 감지
+
+![언어감지](./images/언어감지.gif)
+
 
 ## 설치 및 설정
 
@@ -29,7 +45,7 @@
 그래서 **MS Azure API**를 사용하였습니다.  
 (Azure의 경우 **월 200만**건 까지 무료입니다.)  
 아래 링크를 참고하여 MS Azure API Key를 발급 받아주세요  
-(등록하지 않을 경우 월 1000 쿼리만 실행 가능합니다.)
+(등록하지 않을 경우 월 200 쿼리만 실행 가능합니다.)
 
 * [MS Guide](http://docs.microsofttranslator.com/text-translate.html)
 
