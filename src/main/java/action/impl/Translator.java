@@ -1,22 +1,11 @@
 package action.impl;
 
 import action.TranslateAction;
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.components.ServiceManager;
-import config.AppConfig;
 import ui.LoadingComponent;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import preferences.TranslatorConfig;
-import service.RestTemplate;
 import component.PopupLoader;
-import component.Selector;
-
-import java.io.UnsupportedEncodingException;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 4. 24.

@@ -1,10 +1,10 @@
 package service.impl;
 
 import com.intellij.openapi.components.ServiceManager;
+import request.azure.AzureToken;
+import request.azure.AzureRequestParameter;
 import service.LanguageChecker;
-import service.RestTemplate;
-import dto.AzureToken;
-import dto.TranslateRequest;
+import service.AzureRestTemplate;
 import org.glassfish.jersey.client.ClientConfig;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -26,8 +26,8 @@ import java.time.LocalDateTime;
  * Github : http://github.com/jojoldu
  */
 
-public class RestTemplateImpl implements RestTemplate {
-    private static final Logger logger = LoggerFactory.getLogger(RestTemplateImpl.class);
+public class AzureRestTemplateImpl implements AzureRestTemplate {
+    private static final Logger logger = LoggerFactory.getLogger(AzureRestTemplateImpl.class);
 
     private static final String TOKEN_URL = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=";
     private static final String TRANSLATE_URL = "https://api.microsofttranslator.com/V2/Http.svc/Translate?";
@@ -41,18 +41,18 @@ public class RestTemplateImpl implements RestTemplate {
     }
 
     @NotNull
-    private TranslateRequest createRequestData(String text) throws UnsupportedEncodingException {
+    private AzureRequestParameter createRequestData(String text) throws UnsupportedEncodingException {
         LanguageChecker languageChecker = ServiceManager.getService(LanguageChecker.class);
         String from = languageChecker.detect(text);
 
-        return TranslateRequest.Builder.builder()
+        return AzureRequestParameter.Builder.builder()
                 .text(text)
                 .from(from)
                 .to(languageChecker.exchange(from))
                 .build();
     }
 
-    private String requestTranslate(TranslateRequest requestData, String token) {
+    private String requestTranslate(AzureRequestParameter requestData, String token) {
         Response response = createWebTarget(TRANSLATE_URL+requestData.toString())
                     .request()
                     .header("Authorization", "Bearer "+token)

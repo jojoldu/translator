@@ -42,12 +42,16 @@
 ### API KEY 발급
 
 구글 번역 API는 **유료**만 있습니다.  
-그래서 **MS Azure API**를 사용하였습니다.  
-(Azure의 경우 **월 200만**건 까지 무료입니다.)  
-아래 링크를 참고하여 MS Azure API Key를 발급 받아주세요  
-(등록하지 않을 경우 월 200 쿼리만 실행 가능합니다.)
+그래서 무료 API를 사용해야합니다.
 
 * [MS Guide](http://docs.microsofttranslator.com/text-translate.html)
+  * **월 200만**건까지 무료
+  * 키 발급이 조금 귀찮은 면이 있습니다.
+* [네아버 API](http://blog.naver.com/PostView.nhn?blogId=killkimno&logNo=220647426967)
+  * **하루 1만**건까지 무료
+  * 키 발급이 정말 간단합니다.
+
+등록하지 않을 경우 월 200 쿼리만 실행 가능합니다.
 
 ### API KEY 등록
 
@@ -56,6 +60,7 @@
 ![설정](./images/설정.png)
 
 등록 후, 바로 기능을 사용하시면 됩니다.
+
 
 ## 참고
 

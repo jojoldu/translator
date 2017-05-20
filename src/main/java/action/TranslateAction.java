@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import preferences.TranslatorConfig;
-import service.RestTemplate;
+import service.AzureRestTemplate;
 
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.CompletableFuture;
@@ -45,10 +45,10 @@ public abstract class TranslateAction extends AnAction{
     }
 
     private String requestTranslate(String text) {
-        RestTemplate restTemplate = ServiceManager.getService(RestTemplate.class);
+        AzureRestTemplate azureRestTemplate = ServiceManager.getService(AzureRestTemplate.class);
 
         try {
-            return restTemplate.translate(text, secretKey);
+            return azureRestTemplate.translate(text, secretKey);
         } catch (UnsupportedEncodingException e) {
             logger.error("requestTranslate : {}", e.getMessage());
         }
