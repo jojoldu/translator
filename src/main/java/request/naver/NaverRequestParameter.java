@@ -21,8 +21,8 @@ public class NaverRequestParameter implements RequestParameter{
     }
 
     @Override
-    public String toUrl() {
-        return null;
+    public String toUrlParameter() {
+        return "source="+source+"&target="+target+"&text="+text;
     }
 
     public String getSource() {

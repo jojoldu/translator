@@ -7,5 +7,5 @@ package request;
  */
 
 public interface RequestParameter {
-    String toUrl();
+    String toUrlParameter();
 }

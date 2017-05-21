@@ -1,9 +1,9 @@
 package service;
 
-import service.impl.AzureRestTemplateImpl;
 import config.AppConfig;
-import dto.AzureToken;
 import org.junit.Test;
+import request.azure.AzureToken;
+import service.impl.AzureRestTemplateImpl;
 
 import java.time.LocalDateTime;
 

@@ -78,7 +78,7 @@ public class AzureRestTemplateImpl implements AzureRestTemplate {
 
         if(azureToken == null || azureToken.isExpired(currentTime)){
             String token = requestToken(secretKey);
-            cache(currentTime, token);
+            cacheToken(currentTime, token);
             return token;
         }
 
@@ -97,7 +97,7 @@ public class AzureRestTemplateImpl implements AzureRestTemplate {
         }
     }
 
-    private void cache(LocalDateTime createTime, String token) {
+    private void cacheToken(LocalDateTime createTime, String token) {
         azureToken = new AzureToken(createTime, token);
     }
 

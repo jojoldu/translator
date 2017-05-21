@@ -1,7 +1,13 @@
 package service;
 
+import config.AppConfig;
 import org.junit.Test;
+import request.Auth;
+import response.naver.NaverResponse;
+import service.impl.LanguageCheckerImpl;
 import service.impl.NaverRestTemplateImpl;
+
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -17,12 +23,12 @@ public class NaverRestTemplateTest {
     @Test
     public void 한글_보내면_영문이_온다() throws Exception{
         //given
-        NaverRestTemplate restTemplate = new NaverRestTemplateImpl();
+        NaverRestTemplateImpl restTemplate = new NaverRestTemplateImpl();
+        Auth auth = Auth.newNaverInstance(AppConfig.getNaverClientId(), AppConfig.getNaverClientSecret());
         String text = "번역";
-        String translatedText = restTemplate.translate(text);
+        NaverResponse result = restTemplate.requestTranslate(new LanguageCheckerImpl(), text, auth);
 
         //then
-        assertThat(translatedText, is("translate"));
-
+        assertThat(result.getTranslatedText(), is("translation"));
     }
 }
