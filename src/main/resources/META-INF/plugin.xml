@@ -62,6 +62,7 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <applicationService serviceInterface="service.AzureRestTemplate" serviceImplementation="service.impl.AzureRestTemplateImpl"/>
+    <applicationService serviceInterface="service.NaverRestTemplate" serviceImplementation="service.impl.NaverRestTemplateImpl"/>
     <applicationService serviceInterface="service.LanguageChecker" serviceImplementation="service.impl.LanguageCheckerImpl"/>
     <applicationService serviceInterface="service.Proposer" serviceImplementation="service.impl.ProposerImpl"/>
   </extensions>

@@ -6,6 +6,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.components.ServiceManager;
 import component.Selector;
+import config.ApiType;
 import config.AppConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -37,32 +38,41 @@ public abstract class TranslateAction extends AnAction{
         loadingComponent = new LoadingComponent(e);
         loadingComponent.show();
 
-        Auth auth = createAuth(e);
+        ApiType apiType = classifyType();
+        Auth auth = createAuth(e, apiType);
+        String selectedText = new Selector(e).getSelectedText();
 
         // 초기값 세팅
         init(e);
 
-        String selectedText = new Selector(e).getSelectedText();
-
         // 비동기 Action 실행
-        CompletableFuture.supplyAsync(() -> requestTranslate(selectedText, auth))
+        CompletableFuture.supplyAsync(() -> requestTranslate(selectedText, auth, apiType))
                 .thenAccept(translatedText -> {
-                    action(selectedText, translatedText);
                     loadingComponent.hide();
+                    action(selectedText, translatedText);
                 });
     }
 
-    private Auth createAuth(AnActionEvent e) {
-        TranslatorConfig config = TranslatorConfig.getInstance(e.getRequiredData(CommonDataKeys.PROJECT));
-        String secretKey = StringUtils.isNotEmpty(config.getAzureSecretKey())? config.getAzureSecretKey(): AppConfig.getSecretKey();
-
-        Auth auth = Auth.newAzureInstance(secretKey);
-
-        return auth;
+    private ApiType classifyType(){
+        return ApiType.AZURE;
     }
 
-    private String requestTranslate(String text, Auth auth) {
-        RestTemplate restTemplate = ServiceManager.getService(AzureRestTemplate.class);
+    private Auth createAuth(AnActionEvent e, ApiType apiType) {
+        TranslatorConfig config = TranslatorConfig.getInstance(e.getRequiredData(CommonDataKeys.PROJECT));
+
+        if(ApiType.NAVER == apiType){
+            String clientId = AppConfig.getNaverClientId();
+            String clientSecret = AppConfig.getNaverClientSecret();
+            return Auth.newNaverInstance(clientId, clientSecret);
+        } else {
+            String secretKey = StringUtils.isNotEmpty(config.getAzureSecretKey())? config.getAzureSecretKey(): AppConfig.getSecretKey();
+            return Auth.newAzureInstance(secretKey);
+        }
+    }
+
+    private String requestTranslate(String text, Auth auth, ApiType apiType) {
+        RestTemplate restTemplate = apiType.getRestTemplate();
+
         try {
             return restTemplate.translate(text, auth);
         } catch (UnsupportedEncodingException e) {
