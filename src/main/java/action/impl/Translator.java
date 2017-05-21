@@ -16,19 +16,16 @@ import component.PopupLoader;
 public class Translator extends TranslateAction {
     private static final Logger logger = LoggerFactory.getLogger(Translator.class);
 
-    private LoadingComponent loadingComponent;
     private PopupLoader popupLoader;
 
     @Override
     protected void init(AnActionEvent e) {
         popupLoader = new PopupLoader(e);
-        loadingComponent = new LoadingComponent(e);
-        loadingComponent.show();
+
     }
 
     @Override
     protected void action(String text, String translatedText) {
         popupLoader.show(text.trim(), translatedText.trim());
-        loadingComponent.hide();
     }
 }

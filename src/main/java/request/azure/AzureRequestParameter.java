@@ -1,5 +1,7 @@
 package request.azure;
 
+import request.RequestParameter;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -10,7 +12,7 @@ import java.net.URLEncoder;
  */
 
 
-public class AzureRequestParameter {
+public class AzureRequestParameter implements RequestParameter {
     private String text;
     private String from;
     private String to;
@@ -22,7 +24,7 @@ public class AzureRequestParameter {
     }
 
     @Override
-    public String toString() {
+    public String toUrlParameter() {
         return "text="+text+"&from="+from+"&to="+to;
     }
 

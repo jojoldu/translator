@@ -2,9 +2,8 @@ package service;
 
 import com.intellij.openapi.components.ServiceManager;
 import org.glassfish.jersey.client.ClientConfig;
-import org.jetbrains.annotations.NotNull;
 import request.Auth;
-import service.impl.LanguageCheckerImpl;
+import response.TranslateResponse;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -18,7 +17,8 @@ import java.io.UnsupportedEncodingException;
  */
 
 public interface RestTemplate {
-    String translate(String text, Auth auth) throws UnsupportedEncodingException;
+    TranslateResponse requestTranslate(String requestBody, Auth auth);
+    String createRequestData(LanguageChecker languageChecker, String text) throws UnsupportedEncodingException;
 
     default WebTarget createWebTarget(String url) {
         ClientConfig config = new ClientConfig();
@@ -26,11 +26,15 @@ public interface RestTemplate {
         return client.target(url);
     }
 
-    default String extractFrom(LanguageChecker languageChecker, String text){
-        return languageChecker.detect(text);
+    default String translate(String text, Auth auth) throws UnsupportedEncodingException {
+        LanguageChecker languageChecker = ServiceManager.getService(LanguageChecker.class);
+        String requestBody = createRequestData(languageChecker, text);
+        TranslateResponse response = requestTranslate(requestBody, auth);
+        if(response != null){
+            return response.getTranslatedText();
+        }
+
+        return text;
     }
 
-    default String exchangeLanguageType(LanguageChecker languageChecker, String languageType){
-        return languageChecker.exchange(languageType);
-    }
 }

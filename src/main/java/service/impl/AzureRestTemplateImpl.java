@@ -1,20 +1,18 @@
 package service.impl;
 
 import com.intellij.openapi.components.ServiceManager;
-import request.azure.AzureToken;
-import request.azure.AzureRequestParameter;
-import service.LanguageChecker;
-import service.AzureRestTemplate;
-import org.glassfish.jersey.client.ClientConfig;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.MessageConverter;
+import request.Auth;
+import request.azure.AzureRequestParameter;
+import request.azure.AzureToken;
+import response.TranslateResponse;
+import response.azure.AzureResponse;
+import service.AzureRestTemplate;
+import service.LanguageChecker;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
@@ -35,41 +33,32 @@ public class AzureRestTemplateImpl implements AzureRestTemplate {
     private AzureToken azureToken;
 
     @Override
-    public String translate(String text, String secretKey) throws UnsupportedEncodingException {
-        String token = issueToken(secretKey);
-        return MessageConverter.removeXmlTag(requestTranslate(createRequestData(text), token));
-    }
-
-    @NotNull
-    private AzureRequestParameter createRequestData(String text) throws UnsupportedEncodingException {
-        LanguageChecker languageChecker = ServiceManager.getService(LanguageChecker.class);
+    public String createRequestData(LanguageChecker languageChecker, String text) throws UnsupportedEncodingException {
         String from = languageChecker.detect(text);
 
         return AzureRequestParameter.Builder.builder()
                 .text(text)
                 .from(from)
                 .to(languageChecker.exchange(from))
-                .build();
+                .build()
+                .toUrlParameter();
     }
 
-    private String requestTranslate(AzureRequestParameter requestData, String token) {
-        Response response = createWebTarget(TRANSLATE_URL+requestData.toString())
+    @Override
+    public TranslateResponse requestTranslate(String requestBody, Auth auth) {
+        String token = issueToken(auth.getAzure().getSecretKey());
+
+        Response response = createWebTarget(TRANSLATE_URL+requestBody)
                     .request()
                     .header("Authorization", "Bearer "+token)
                     .get(Response.class);
 
         if(response.getStatus() != 200){
             logger.error("Translate Request Exception : {}", response.getStatusInfo().getReasonPhrase());
-            return "";
+            return null;
         }
 
-        return response.readEntity(String.class);
-    }
-
-    private WebTarget createWebTarget(String url) {
-        ClientConfig config = new ClientConfig();
-        Client client = ClientBuilder.newClient(config);
-        return client.target(url);
+        return new AzureResponse(response.readEntity(String.class));
     }
 
     @Override
