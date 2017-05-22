@@ -21,18 +21,12 @@ import org.jetbrains.annotations.Nullable;
 )
 public class TranslatorConfig implements PersistentStateComponent<TranslatorConfig> {
 
+    private String apiType = "";
     private String azureSecretKey = "";
+    private String naverClientId = "";
+    private String naverClientSecret = "";
 
-    public TranslatorConfig() {
-    }
-
-    public String getAzureSecretKey() {
-        return azureSecretKey;
-    }
-
-    public void setAzureSecretKey(String azureSecretKey) {
-        this.azureSecretKey = azureSecretKey;
-    }
+    public TranslatorConfig() {}
 
     @Nullable
     @Override
@@ -48,4 +42,37 @@ public class TranslatorConfig implements PersistentStateComponent<TranslatorConf
     public static TranslatorConfig getInstance(Project project){
         return ServiceManager.getService(project, TranslatorConfig.class);
     }
+
+    public String getApiType() {
+        return apiType;
+    }
+
+    public void setApiType(String apiType) {
+        this.apiType = apiType;
+    }
+
+    public String getAzureSecretKey() {
+        return azureSecretKey;
+    }
+
+    public void setAzureSecretKey(String azureSecretKey) {
+        this.azureSecretKey = azureSecretKey;
+    }
+
+    public String getNaverClientId() {
+        return naverClientId;
+    }
+
+    public void setNaverClientId(String naverClientId) {
+        this.naverClientId = naverClientId;
+    }
+
+    public String getNaverClientSecret() {
+        return naverClientSecret;
+    }
+
+    public void setNaverClientSecret(String naverClientSecret) {
+        this.naverClientSecret = naverClientSecret;
+    }
+
 }
