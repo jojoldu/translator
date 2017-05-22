@@ -1,12 +1,9 @@
 package component;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.ui.awt.RelativePoint;
-import component.Selector;
 import util.MessageConverter;
 
 import javax.swing.*;
@@ -15,19 +12,21 @@ import java.awt.*;
 public class PopupLoader {
 
     private Selector selector;
+    private final JComponent jComponent;
+    private final Point point;
 
     public PopupLoader(AnActionEvent event) {
         this.selector = new Selector(event);
+        this.jComponent = selector.getCurrentComponent();
+        this.point = selector.extractPoint();
+
     }
 
     public void show(String text, String translatedText) {
-        JComponent jComponent = selector.getCurrentComponent();
-        Point point = selector.extractPoint();
-
-        if (jComponent != null && point != null) {
+        if (isSelected()) {
             JBPopupFactory.getInstance()
                     .createHtmlTextBalloonBuilder(
-                            MessageConverter.applyStyle(text, translatedText),
+                            MessageConverter.applyTranslateStyle(text, translatedText),
                             null,
                             Color.GRAY,
                             null)
@@ -36,5 +35,25 @@ public class PopupLoader {
                     .show(new RelativePoint(jComponent, point),
                             Balloon.Position.below);
         }
+    }
+
+    public void showError(String content){
+        if(isSelected()){
+            JBPopupFactory.getInstance()
+                    .createHtmlTextBalloonBuilder(
+                            MessageConverter.applyExceptionStyle(content),
+                            null,
+                            Color.GRAY,
+                            null)
+                    .setFadeoutTime(7500)
+                    .createBalloon()
+                    .show(new RelativePoint(jComponent, point),
+                            Balloon.Position.below);
+
+        }
+    }
+
+    private boolean isSelected() {
+        return jComponent != null && point != null;
     }
 }

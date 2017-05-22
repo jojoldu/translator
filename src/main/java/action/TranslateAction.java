@@ -4,16 +4,16 @@ import action.impl.Translator;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.components.ServiceManager;
+import component.PopupLoader;
 import component.Selector;
 import config.ApiType;
 import config.AppConfig;
+import exception.EmptyAuthException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import preferences.TranslatorConfig;
 import request.Auth;
-import service.AzureRestTemplate;
 import service.RestTemplate;
 import ui.LoadingComponent;
 
@@ -39,18 +39,26 @@ public abstract class TranslateAction extends AnAction{
         loadingComponent.show();
 
         ApiType apiType = classifyType();
-        Auth auth = createAuth(e, apiType);
-        String selectedText = new Selector(e).getSelectedText();
 
-        // 초기값 세팅
-        init(e);
+        try{
+            Auth auth = createAuth(e, apiType);
+            String selectedText = new Selector(e).getSelectedText();
 
-        // 비동기 Action 실행
-        CompletableFuture.supplyAsync(() -> requestTranslate(selectedText, auth, apiType))
-                .thenAccept(translatedText -> {
-                    loadingComponent.hide();
-                    action(selectedText, translatedText);
-                });
+            // 초기값 세팅
+            init(e);
+
+            // 비동기 Action 실행
+            CompletableFuture.supplyAsync(() -> requestTranslate(selectedText, auth, apiType))
+                    .thenAccept(translatedText -> {
+                        loadingComponent.hide();
+                        action(selectedText, translatedText);
+                    });
+
+        } catch (EmptyAuthException eae){
+            loadingComponent.hide();
+            new PopupLoader(e).showError(eae.getMessage());
+        }
+
     }
 
     private ApiType classifyType(){
@@ -63,10 +71,19 @@ public abstract class TranslateAction extends AnAction{
         if(ApiType.NAVER == apiType){
             String clientId = AppConfig.getNaverClientId();
             String clientSecret = AppConfig.getNaverClientSecret();
+
+            verifyAuth(clientId, clientSecret);
+
             return Auth.newNaverInstance(clientId, clientSecret);
         } else {
             String secretKey = StringUtils.isNotEmpty(config.getAzureSecretKey())? config.getAzureSecretKey(): AppConfig.getSecretKey();
             return Auth.newAzureInstance(secretKey);
+        }
+    }
+
+    private void verifyAuth(String clientId, String clientSecret){
+        if(StringUtils.isEmpty(clientId) || StringUtils.isEmpty(clientSecret)){
+            throw new EmptyAuthException("Naver의 ClientId와 ClientSecret가 없습니다.");
         }
     }
 
