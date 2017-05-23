@@ -1,4 +1,6 @@
-package dto;
+package request.azure;
+
+import request.RequestParameter;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -10,19 +12,19 @@ import java.net.URLEncoder;
  */
 
 
-public class TranslateRequest {
+public class AzureRequestParameter implements RequestParameter {
     private String text;
     private String from;
     private String to;
 
-    private TranslateRequest(String text, String from, String to) {
+    private AzureRequestParameter(String text, String from, String to) {
         this.text = text;
         this.from = from;
         this.to = to;
     }
 
     @Override
-    public String toString() {
+    public String toUrlParameter() {
         return "text="+text+"&from="+from+"&to="+to;
     }
 
@@ -53,8 +55,8 @@ public class TranslateRequest {
             return this;
         }
 
-        public TranslateRequest build() {
-            return new TranslateRequest(text, from, to);
+        public AzureRequestParameter build() {
+            return new AzureRequestParameter(text, from, to);
         }
     }
 }

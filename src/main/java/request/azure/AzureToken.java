@@ -1,4 +1,4 @@
-package dto;
+package request.azure;
 
 import java.time.LocalDateTime;
 

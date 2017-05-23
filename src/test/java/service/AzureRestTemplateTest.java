@@ -1,9 +1,13 @@
 package service;
 
-import service.impl.RestTemplateImpl;
 import config.AppConfig;
-import dto.AzureToken;
+import org.junit.Before;
 import org.junit.Test;
+import request.Auth;
+import request.azure.AzureRequestParameter;
+import request.azure.AzureToken;
+import response.TranslateResponse;
+import service.impl.AzureRestTemplateImpl;
 
 import java.time.LocalDateTime;
 
@@ -17,11 +21,18 @@ import static org.junit.Assert.assertTrue;
  * Github : http://github.com/jojoldu
  */
 
-public class RestTemplateTest {
+public class AzureRestTemplateTest {
+
+    private Auth auth;
+
+    @Before
+    public void setup() {
+        auth = Auth.newAzureInstance(AppConfig.getSecretKey());
+    }
 
     @Test
     public void Azure에_토큰발급요청시_문자열토큰발급() throws Exception{
-        RestTemplateImpl restApi = new RestTemplateImpl();
+        AzureRestTemplateImpl restApi = new AzureRestTemplateImpl();
         String token = restApi.issueToken(AppConfig.getSecretKey());
 
         assertTrue(token.length() > 0);
@@ -44,22 +55,32 @@ public class RestTemplateTest {
     @Test
     public void 번역요청을하면_문자열이_전달된다() throws Exception {
         //given
-        RestTemplateImpl restApi = new RestTemplateImpl();
-        String result = restApi.translate("brother", AppConfig.getSecretKey());
+        AzureRestTemplateImpl restApi = new AzureRestTemplateImpl();
+        String requestBody = AzureRequestParameter.Builder.builder()
+                .from("en")
+                .to("ko")
+                .text("brother")
+                .build()
+                .toUrlParameter();
+        TranslateResponse result = restApi.requestTranslate(requestBody, auth);
 
         //then
-        assertThat(result, is("동생"));
-        assertTrue(result.length() > 0);
+        assertThat(result.getTranslatedText(), is("동생"));
     }
 
     @Test
     public void 한글번역요청을하면_영문자열이_전달된다() throws Exception {
         //given
-        RestTemplateImpl restApi = new RestTemplateImpl();
-        String result = restApi.translate("결제 승인", AppConfig.getSecretKey());
+        AzureRestTemplateImpl restApi = new AzureRestTemplateImpl();
+        String requestBody = AzureRequestParameter.Builder.builder()
+                .from("ko")
+                .to("en")
+                .text("결제 승인")
+                .build()
+                .toUrlParameter();
+        TranslateResponse result = restApi.requestTranslate(requestBody, auth);
 
         //then
-        assertThat(result, is("Payment approval"));
-        assertTrue(result.length() > 0);
+        assertThat(result.getTranslatedText(), is("Payment approval"));
     }
 }
