@@ -50,7 +50,7 @@ So you have to use the free API.
   * Free up to **2 million per month**
   * The key issuance process is a little annoying.
   * It is recommended for overseas people.
-* [네아버 API](http://blog.naver.com/PostView.nhn?blogId=killkimno&logNo=220647426967)
+* [Naver API](http://blog.naver.com/PostView.nhn?blogId=killkimno&logNo=220647426967)
   * Free up to **10,000 per day**
   * The key issuing process is really simple.
   * Recommended for Koreans.
@@ -76,22 +76,22 @@ Please register ClientId and ClientSecret issued
 ## Release Notes
 
 * 0.0.8
-   * Naver translation API support
+  * Naver translation API support
 * 0.0.7
-   * Fixed Api Key lookup bug
+  * Fixed Api Key lookup bug
 * 0.0.6
-   * Asynchronous progress to change entire event
+  * Asynchronous progress to change entire event
 * 0.0.5
-   * Added automatic text selection function according to focus
+  * Added automatic text selection function according to focus
 * 0.0.4
-   * Added loading popup function when viewing
+  * Added loading popup function when viewing
 * 0.0.3
-   * Bug fixes
+  * Bug fixes
 * 0.0.2
-   * Added basic translation function
-   * Added translation & text replacement function
+  * Added basic translation function
+  * Added translation & text replacement function
 * 0.0.1
-   * Create project
+  * Create project
 
 ## Reference
 
