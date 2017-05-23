@@ -37,57 +37,50 @@ public class TranslatorConfigurableGUI {
 
         naverClientIdField.setText(config.getNaverClientId());
         naverClientSecretField.setText(config.getNaverClientSecret());
+
+        apiType.addItemListener(e -> setEnabled());
     }
 
     public JPanel getRootPanel() {
         return rootPanel;
     }
 
-    {
-        $$$setupUI$$$();
-    }
-
-    private void $$$setupUI$$$() {
-        rootPanel = new JPanel();
-        rootPanel.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
-        rootPanel.setRequestFocusEnabled(true);
-        rootPanel.add(azureSecretKeyTitle, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(80, 16), null, 0, false));
-        rootPanel.add(naverClientIdTitle, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(80, 16), null, 0, false));
-        rootPanel.add(naverClientSecretTitle, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(80, 16), null, 0, false));
-
-        azureSecretKeyField = new JTextField();
-        naverClientIdField = new JTextField();
-        naverClientSecretField = new JTextField();
-
-        setEnabled();
-
-        rootPanel.add(azureSecretKeyField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        rootPanel.add(naverClientIdField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        rootPanel.add(naverClientSecretField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-
-        azureSecretKeyTitle.setLabelFor(azureSecretKeyField);
-    }
-
     private void setEnabled(){
+        if(isAzure()){
+            useAzure();
+        } else {
+            useNaver();
+        }
+    }
 
-        azureSecretKeyField.setAutoscrolls(true);
+    private boolean isAzure() {
+        return apiType.getSelectedItem().equals("Azure");
+    }
+
+    private void useAzure() {
         azureSecretKeyField.setEditable(true);
         azureSecretKeyField.setEnabled(true);
-        azureSecretKeyField.setHorizontalAlignment(10);
 
-        naverClientIdField.setAutoscrolls(true);
+        naverClientIdField.setEditable(false);
+        naverClientIdField.setEnabled(false);
+
+        naverClientSecretField.setEditable(false);
+        naverClientSecretField.setEnabled(false);
+    }
+
+    private void useNaver() {
+        azureSecretKeyField.setEditable(false);
+        azureSecretKeyField.setEnabled(false);
+
         naverClientIdField.setEditable(true);
         naverClientIdField.setEnabled(true);
-        naverClientIdField.setHorizontalAlignment(10);
 
-        naverClientSecretField.setAutoscrolls(true);
         naverClientSecretField.setEditable(true);
         naverClientSecretField.setEnabled(true);
-        naverClientSecretField.setHorizontalAlignment(10);
     }
 
     public void apply() {
-
+        config.setApiType(apiType.getSelectedItem().toString());
         config.setAzureSecretKey(azureSecretKeyField.getText());
 
         config.setNaverClientId(naverClientIdField.getText());

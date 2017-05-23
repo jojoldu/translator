@@ -18,14 +18,12 @@ import javax.swing.*;
 public class TranslatorConfigurable implements SearchableConfigurable {
 
     private TranslatorConfigurableGUI gui;
-    private TranslatorConfig config;
 
     @SuppressWarnings("FieldCanBeLocal")
     private final Project project;
 
     public TranslatorConfigurable(@NotNull Project project) {
         this.project = project;
-        this.config = TranslatorConfig.getInstance(project);
     }
 
     @Nullable
