@@ -57,11 +57,19 @@
 
 ### API KEY 등록
 
-발급 받은 Key를 아래 위치에 등록해주세요.
+두 API 중 어느것이든 하나만 등록되어있으면 사용가능합니다.
 
-![설정](./images/설정.png)
+#### Azure  
+발급 받은 Secret Key를 아래 위치에 등록해주세요.
+
+![azure 설정](./images/azure설정.png)
 
 등록 후, 바로 기능을 사용하시면 됩니다.
+
+#### Naver  
+발급 받은 ClientId와 ClientSecret를 등록해주세요
+
+![naver 설정](./images/naver설정.png)
 
 ## Release Notes
 
