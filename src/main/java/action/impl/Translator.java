@@ -1,8 +1,7 @@
 package action.impl;
 
-import action.TranslateAction;
+import action.InstantTranslateAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import ui.LoadingComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import component.PopupLoader;
@@ -13,7 +12,7 @@ import component.PopupLoader;
  * Github : http://github.com/jojoldu
  */
 
-public class Translator extends TranslateAction {
+public class Translator extends InstantTranslateAction {
     private static final Logger logger = LoggerFactory.getLogger(Translator.class);
 
     private PopupLoader popupLoader;
