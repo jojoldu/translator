@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>org.intellij.plugin.jojoldu.translator</id>
   <name>Translator</name>
-  <version>0.0.7</version>
+  <version>0.0.8</version>
   <vendor email="jojoldu@gmail.com" url="https://github.com/jojoldu">jojoldu</vendor>
 
   <description><![CDATA[
@@ -24,7 +24,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      <a href="https://github.com/jojoldu/translator/tree/0.0.7"><b>v0.0.7</b></a> (2017-05-18) <br/><br/>
+      <a href="https://github.com/jojoldu/translator/tree/0.0.8"><b>v0.0.8</b></a> (2017-05-23) <br/><br/>
       <ul>
         <li>0.0.1: Project initiate</li>
         <li>0.0.2: Add Translate & Replace Feature</li>
@@ -33,6 +33,7 @@
         <li>0.0.5: Add Auto Select Feature</li>
         <li>0.0.6: Async Translate Event</li>
         <li>0.0.7: Bug Fix</li>
+        <li>0.0.8: Add Naver Translate Api</li>
       </ul>
     ]]>
   </change-notes>
