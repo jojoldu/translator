@@ -30,15 +30,13 @@ public abstract class TranslateAction extends AnAction{
 
     private static final Logger logger = LoggerFactory.getLogger(Translator.class);
 
-    private LoadingComponent loadingComponent;
-
     @Override
     public void actionPerformed(AnActionEvent e) {
 
-        loadingComponent = new LoadingComponent(e);
+        LoadingComponent loadingComponent = new LoadingComponent(e);
         loadingComponent.show();
 
-        ApiType apiType = classifyType();
+        ApiType apiType = classifyType(e);
 
         try{
             Auth auth = createAuth(e, apiType);
@@ -61,16 +59,16 @@ public abstract class TranslateAction extends AnAction{
 
     }
 
-    private ApiType classifyType(){
-        return ApiType.AZURE;
+    private ApiType classifyType(AnActionEvent e){
+        return ApiType.valueOf(TranslatorConfig.getInstance(e.getRequiredData(CommonDataKeys.PROJECT)).getApiType());
     }
 
-    private Auth createAuth(AnActionEvent e, ApiType apiType) {
+    private Auth createAuth(AnActionEvent e, ApiType apiType) throws EmptyAuthException{
         TranslatorConfig config = TranslatorConfig.getInstance(e.getRequiredData(CommonDataKeys.PROJECT));
 
         if(ApiType.NAVER == apiType){
-            String clientId = AppConfig.getNaverClientId();
-            String clientSecret = AppConfig.getNaverClientSecret();
+            String clientId = config.getNaverClientId();
+            String clientSecret = config.getNaverClientSecret();
 
             verifyAuth(clientId, clientSecret);
 
@@ -83,7 +81,7 @@ public abstract class TranslateAction extends AnAction{
 
     private void verifyAuth(String clientId, String clientSecret){
         if(StringUtils.isEmpty(clientId) || StringUtils.isEmpty(clientSecret)){
-            throw new EmptyAuthException("Naver의 ClientId와 ClientSecret가 없습니다.");
+            throw new EmptyAuthException("NAVER의 ClientId와 ClientSecret가 없습니다.");
         }
     }
 

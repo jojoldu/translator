@@ -72,8 +72,8 @@
         </constraints>
         <properties>
           <model>
-            <item value="Azure"/>
-            <item value="Naver"/>
+            <item value="AZURE"/>
+            <item value="NAVER"/>
           </model>
         </properties>
       </component>

@@ -38,6 +38,7 @@ public class TranslatorConfigurableGUI {
         naverClientIdField.setText(config.getNaverClientId());
         naverClientSecretField.setText(config.getNaverClientSecret());
 
+        setEnabled();
         apiType.addItemListener(e -> setEnabled());
     }
 
@@ -54,7 +55,7 @@ public class TranslatorConfigurableGUI {
     }
 
     private boolean isAzure() {
-        return apiType.getSelectedItem().equals("Azure");
+        return apiType.getSelectedItem().equals("AZURE");
     }
 
     private void useAzure() {
