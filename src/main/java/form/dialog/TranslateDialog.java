@@ -5,7 +5,6 @@ import java.awt.event.*;
 
 public class TranslateDialog extends JDialog {
     private JPanel contentPane;
-    private JButton buttonCancel;
     private JTextField textField1;
     private JButton query;
     private JLabel translatedText;
@@ -16,8 +15,6 @@ public class TranslateDialog extends JDialog {
         getRootPane().setDefaultButton(query);
 
         query.addActionListener(e -> onQuery());
-
-        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -44,10 +41,4 @@ public class TranslateDialog extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-        TranslateDialog dialog = new TranslateDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
 }
