@@ -72,6 +72,7 @@
         </constraints>
         <properties>
           <model>
+            <item value="DEFAULT"/>
             <item value="AZURE"/>
             <item value="NAVER"/>
           </model>

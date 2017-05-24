@@ -60,7 +60,8 @@ public abstract class TranslateAction extends AnAction{
     }
 
     private ApiType classifyType(AnActionEvent e){
-        return ApiType.valueOf(TranslatorConfig.getInstance(e.getRequiredData(CommonDataKeys.PROJECT)).getApiType());
+        String apiTypeKey = TranslatorConfig.getInstance(e.getRequiredData(CommonDataKeys.PROJECT)).getApiType();
+        return ApiType.findByName(apiTypeKey);
     }
 
     private Auth createAuth(AnActionEvent e, ApiType apiType) throws EmptyAuthException{
@@ -73,9 +74,17 @@ public abstract class TranslateAction extends AnAction{
             verifyAuth(clientId, clientSecret);
 
             return Auth.newNaverInstance(clientId, clientSecret);
+        } else if(ApiType.AZURE == apiType){
+            verifyAuth(config.getAzureSecretKey());
+            return Auth.newAzureInstance(config.getAzureSecretKey());
         } else {
-            String secretKey = StringUtils.isNotEmpty(config.getAzureSecretKey())? config.getAzureSecretKey(): AppConfig.getSecretKey();
-            return Auth.newAzureInstance(secretKey);
+            return Auth.newAzureInstance(AppConfig.getSecretKey());
+        }
+    }
+
+    private void verifyAuth(String secretKey) {
+        if(StringUtils.isEmpty(secretKey)){
+            throw new EmptyAuthException("AZURE의 SecretKey가 없습니다.");
         }
     }
 

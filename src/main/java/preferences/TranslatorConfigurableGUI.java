@@ -47,15 +47,24 @@ public class TranslatorConfigurableGUI {
     }
 
     private void setEnabled(){
-        if(isAzure()){
+        if(apiType.getSelectedItem().equals("AZURE")){
             useAzure();
-        } else {
+        } else if(apiType.getSelectedItem().equals("NAVER")){
             useNaver();
+        } else {
+            useDefault();
         }
     }
 
-    private boolean isAzure() {
-        return apiType.getSelectedItem().equals("AZURE");
+    private void useDefault() {
+        azureSecretKeyField.setEditable(false);
+        azureSecretKeyField.setEnabled(false);
+
+        naverClientIdField.setEditable(false);
+        naverClientIdField.setEnabled(false);
+
+        naverClientSecretField.setEditable(false);
+        naverClientSecretField.setEnabled(false);
     }
 
     private void useAzure() {
