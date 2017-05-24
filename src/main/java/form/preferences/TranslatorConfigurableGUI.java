@@ -1,12 +1,9 @@
-package preferences;
+package form.preferences;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 8.

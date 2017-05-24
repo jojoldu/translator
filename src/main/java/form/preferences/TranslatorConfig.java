@@ -1,4 +1,4 @@
-package preferences;
+package form.preferences;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;

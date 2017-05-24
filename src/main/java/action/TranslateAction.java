@@ -8,7 +8,7 @@ import exception.EmptyAuthException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import preferences.TranslatorConfig;
+import form.preferences.TranslatorConfig;
 import request.Auth;
 import service.RestTemplate;
 

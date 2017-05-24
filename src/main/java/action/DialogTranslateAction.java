@@ -1,5 +1,6 @@
 package action;
 
+import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 
 /**
@@ -8,7 +9,10 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
  * Github : http://github.com/jojoldu
  */
 
-public class DialogTranslateAction implements TranslateAction {
+public class DialogTranslateAction extends AnAction implements TranslateAction {
 
+    @Override
+    public void actionPerformed(AnActionEvent e) {
 
+    }
 }

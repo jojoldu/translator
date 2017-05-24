@@ -9,7 +9,7 @@ import exception.EmptyAuthException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import request.Auth;
-import ui.LoadingComponent;
+import ui.icon.LoadingComponent;
 
 import java.util.concurrent.CompletableFuture;
 

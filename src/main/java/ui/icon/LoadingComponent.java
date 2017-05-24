@@ -1,4 +1,4 @@
-package ui;
+package ui.icon;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.popup.Balloon;
