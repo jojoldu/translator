@@ -75,6 +75,8 @@
 
 ## Release Notes
 
+* 0.0.9
+  * Default Mode 추가
 * 0.0.8
   * Naver 번역 API 지원
 * 0.0.7

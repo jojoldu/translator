@@ -75,6 +75,8 @@ Please register ClientId and ClientSecret issued
 
 ## Release Notes
 
+* 0.0.9
+  * Added default mode
 * 0.0.8
   * Naver translation API support
 * 0.0.7
