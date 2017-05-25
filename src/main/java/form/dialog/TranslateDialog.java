@@ -5,16 +5,22 @@ import java.awt.event.*;
 
 public class TranslateDialog extends JDialog {
     private JPanel contentPane;
-    private JTextField textField1;
-    private JButton query;
-    private JLabel translatedText;
+    private JTextField queryTextField;
+    private JButton queryBtn;
+    private JPanel translatedPane;
+    private JLabel translatedTextLabel;
+    private JTextPane translatedTextPane;
 
     public TranslateDialog() {
+        init();
+    }
+
+    private void init() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(query);
+        getRootPane().setDefaultButton(queryBtn);
 
-        query.addActionListener(e -> onQuery());
+        queryBtn.addActionListener(e -> onQuery());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -33,7 +39,7 @@ public class TranslateDialog extends JDialog {
 
     private void onQuery() {
         // add your code here
-        dispose();
+        translatedTextLabel.setText(queryTextField.getText());
     }
 
     private void onCancel() {
