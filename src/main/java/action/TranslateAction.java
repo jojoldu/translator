@@ -1,80 +1,45 @@
 package action;
 
-import action.impl.Translator;
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import component.PopupLoader;
-import component.Selector;
 import config.ApiType;
 import config.AppConfig;
 import exception.EmptyAuthException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import preferences.TranslatorConfig;
+import form.preferences.TranslatorConfig;
 import request.Auth;
 import service.RestTemplate;
-import ui.LoadingComponent;
 
 import java.io.UnsupportedEncodingException;
-import java.util.concurrent.CompletableFuture;
 
 /**
- * Created by jojoldu@gmail.com on 2017. 5. 17.
+ * Created by jojoldu@gmail.com on 2017. 5. 24.
  * Blog : http://jojoldu.tistory.com
  * Github : http://github.com/jojoldu
  */
 
-public abstract class TranslateAction extends AnAction{
+public interface TranslateAction {
 
-    private static final Logger logger = LoggerFactory.getLogger(Translator.class);
+    Logger logger = LoggerFactory.getLogger(TranslateAction.class);
 
-    @Override
-    public void actionPerformed(AnActionEvent e) {
-
-        LoadingComponent loadingComponent = new LoadingComponent(e);
-        loadingComponent.show();
-
-        ApiType apiType = classifyType(e);
-
-        try{
-            Auth auth = createAuth(e, apiType);
-            String selectedText = new Selector(e).getSelectedText();
-
-            // 초기값 세팅
-            init(e);
-
-            // 비동기 Action 실행
-            CompletableFuture.supplyAsync(() -> requestTranslate(selectedText, auth, apiType))
-                    .thenAccept(translatedText -> {
-                        loadingComponent.hide();
-                        action(selectedText, translatedText);
-                    });
-
-        } catch (EmptyAuthException eae){
-            loadingComponent.hide();
-            new PopupLoader(e).showError(eae.getMessage());
-        }
-
-    }
-
-    private ApiType classifyType(AnActionEvent e){
+    default ApiType classifyType(AnActionEvent e) {
         String apiTypeKey = TranslatorConfig.getInstance(e.getRequiredData(CommonDataKeys.PROJECT)).getApiType();
         return ApiType.findByName(apiTypeKey);
     }
 
-    private Auth createAuth(AnActionEvent e, ApiType apiType) throws EmptyAuthException{
+    default Auth createAuth(AnActionEvent e, ApiType apiType) throws EmptyAuthException {
         TranslatorConfig config = TranslatorConfig.getInstance(e.getRequiredData(CommonDataKeys.PROJECT));
 
-        if(ApiType.NAVER == apiType){
+        if (ApiType.NAVER == apiType) {
             String clientId = config.getNaverClientId();
             String clientSecret = config.getNaverClientSecret();
 
             verifyAuth(clientId, clientSecret);
 
             return Auth.newNaverInstance(clientId, clientSecret);
-        } else if(ApiType.AZURE == apiType){
+        } else if (ApiType.AZURE == apiType) {
             verifyAuth(config.getAzureSecretKey());
             return Auth.newAzureInstance(config.getAzureSecretKey());
         } else {
@@ -82,19 +47,19 @@ public abstract class TranslateAction extends AnAction{
         }
     }
 
-    private void verifyAuth(String secretKey) {
-        if(StringUtils.isEmpty(secretKey)){
-            throw new EmptyAuthException("AZURE의 SecretKey가 없습니다.");
+    default void verifyAuth(String secretKey) {
+        if (StringUtils.isEmpty(secretKey)) {
+            throw new EmptyAuthException("AZURE's SecretKey is missing");
         }
     }
 
-    private void verifyAuth(String clientId, String clientSecret){
-        if(StringUtils.isEmpty(clientId) || StringUtils.isEmpty(clientSecret)){
-            throw new EmptyAuthException("NAVER의 ClientId와 ClientSecret가 없습니다.");
+    default void verifyAuth(String clientId, String clientSecret) {
+        if (StringUtils.isEmpty(clientId) || StringUtils.isEmpty(clientSecret)) {
+            throw new EmptyAuthException("NAVER's clientId and clientSecret are missing");
         }
     }
 
-    private String requestTranslate(String text, Auth auth, ApiType apiType) {
+    default String requestTranslate(String text, Auth auth, ApiType apiType) {
         RestTemplate restTemplate = apiType.getRestTemplate();
 
         try {
@@ -105,8 +70,4 @@ public abstract class TranslateAction extends AnAction{
 
         return text;
     }
-
-    protected abstract void init(AnActionEvent e);
-
-    protected abstract void action(String text, String translatedText);
 }

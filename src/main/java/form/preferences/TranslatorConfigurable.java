@@ -1,4 +1,4 @@
-package preferences;
+package form.preferences;
 
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;

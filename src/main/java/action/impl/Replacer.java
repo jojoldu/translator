@@ -1,12 +1,11 @@
 package action.impl;
 
-import action.TranslateAction;
+import action.InstantTranslateAction;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInsight.lookup.LookupManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.editor.Editor;
@@ -20,7 +19,7 @@ import service.Proposer;
  * Github : http://github.com/jojoldu
  */
 
-public class Replacer extends TranslateAction {
+public class Replacer extends InstantTranslateAction {
     private static final Logger logger = LoggerFactory.getLogger(Replacer.class);
 
     private Editor editor;

@@ -48,8 +48,8 @@
   <depends>com.intellij.modules.lang</depends>
 
   <extensions defaultExtensionNs="com.intellij">
-    <projectConfigurable groupId="tools" displayName="Translator" id="preferences.TranslatorConfigurable" instance="preferences.TranslatorConfigurable" />
-    <projectService serviceInterface="preferences.TranslatorConfig" serviceImplementation="preferences.TranslatorConfig"/>
+    <projectConfigurable groupId="tools" displayName="Translator" id="form.preferences.TranslatorConfigurable" instance="form.preferences.TranslatorConfigurable" />
+    <projectService serviceInterface="form.preferences.TranslatorConfig" serviceImplementation="form.preferences.TranslatorConfig"/>
   </extensions>
 
   <actions>
@@ -57,8 +57,12 @@
       <keyboard-shortcut keymap="$default" first-keystroke="alt 1"/>
     </action>
 
-    <action id="action.impl.Replacer" class="action.impl.Replacer" text="action.impl.Replacer" description="suggest and replace current text ">
+    <action id="action.impl.Replacer" class="action.impl.Replacer" text="action.impl.Replacer" description="suggest and replace current text">
       <keyboard-shortcut keymap="$default" first-keystroke="alt 2"/>
+    </action>
+
+    <action id="action.DialogTranslateAction" class="action.DialogTranslateAction" text="action.DialogTranslateAction" description="show Translate Dialog">
+      <keyboard-shortcut keymap="$default" first-keystroke="alt 3"/>
     </action>
   </actions>
 
