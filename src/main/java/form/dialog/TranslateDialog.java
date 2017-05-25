@@ -3,6 +3,7 @@ package form.dialog;
 import action.TranslateAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.wm.WindowManager;
+import com.intellij.util.ui.UIUtil;
 import component.PopupLoader;
 import component.Selector;
 import config.ApiType;
@@ -10,6 +11,7 @@ import exception.EmptyAuthException;
 import request.Auth;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.concurrent.CompletableFuture;
 
@@ -41,7 +43,27 @@ public class TranslateDialog extends JDialog implements TranslateAction {
         this.pack();
         this.setTitle(TITLE);
         this.setLocationRelativeTo(WindowManager.getInstance().getFrame(e.getProject()).getRootPane().getParent());
+
+        applyColor();
+
         this.setVisible(true);
+    }
+
+    private void applyColor(){
+        if(UIUtil.isUnderDarcula()){
+            Color dracula = new Color(43,43,43);
+            translatedPane.setBackground(dracula);
+            queryTextField.setBackground(dracula);
+            queryTextField.setForeground(Color.WHITE);
+            translatedTextLabel.setForeground(Color.WHITE);
+        } else {
+            Color lowBlue = new Color(48, 99, 191);
+            translatedPane.setBackground(Color.WHITE);
+            queryTextField.setBackground(Color.WHITE);
+            queryTextField.setForeground(lowBlue);
+            translatedTextLabel.setForeground(lowBlue);
+        }
+
     }
 
     private void init() {
@@ -67,7 +89,7 @@ public class TranslateDialog extends JDialog implements TranslateAction {
     private void onQuery() {
 
         translatedTextLabel.setText("Querying....");
-        
+
         String queryText = queryTextField.getText();
 
         // 비동기 Action 실행

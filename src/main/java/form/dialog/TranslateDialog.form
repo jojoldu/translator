@@ -20,14 +20,14 @@
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="-1" height="350"/>
+                <preferred-size width="-1" height="150"/>
               </grid>
             </constraints>
             <properties>
-              <background color="-1"/>
-              <foreground color="-1"/>
+              <background color="-12105913"/>
+              <foreground color="-12105913"/>
             </properties>
-            <border type="line">
+            <border type="none">
               <color color="-1"/>
             </border>
             <children>
@@ -37,7 +37,8 @@
                 </constraints>
                 <properties>
                   <background color="-13948117"/>
-                  <font size="14"/>
+                  <font size="16" style="1"/>
+                  <foreground color="-460545"/>
                   <text value="Nothing to show"/>
                 </properties>
               </component>
@@ -50,7 +51,7 @@
               </grid>
             </constraints>
             <properties>
-              <background color="-328966"/>
+              <background color="-12105913"/>
               <foreground color="-13605953"/>
               <text value=""/>
             </properties>

@@ -49,13 +49,13 @@ public interface TranslateAction {
 
     default void verifyAuth(String secretKey) {
         if (StringUtils.isEmpty(secretKey)) {
-            throw new EmptyAuthException("AZURE의 SecretKey가 없습니다.");
+            throw new EmptyAuthException("AZURE's SecretKey is missing");
         }
     }
 
     default void verifyAuth(String clientId, String clientSecret) {
         if (StringUtils.isEmpty(clientId) || StringUtils.isEmpty(clientSecret)) {
-            throw new EmptyAuthException("NAVER의 ClientId와 ClientSecret가 없습니다.");
+            throw new EmptyAuthException("NAVER's clientId and clientSecret are missing");
         }
     }
 
