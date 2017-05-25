@@ -27,7 +27,7 @@ public abstract class InstantTranslateAction extends AnAction implements Transla
     public void actionPerformed(AnActionEvent e) {
 
         LoadingComponent loadingComponent = new LoadingComponent(e);
-        loadingComponent.show();
+        loadingComponent.showBalloon();
 
         ApiType apiType = classifyType(e);
 
@@ -41,12 +41,12 @@ public abstract class InstantTranslateAction extends AnAction implements Transla
             // 비동기 Action 실행
             CompletableFuture.supplyAsync(() -> requestTranslate(selectedText, auth, apiType))
                     .thenAccept(translatedText -> {
-                        loadingComponent.hide();
+                        loadingComponent.hideBalloon();
                         action(selectedText, translatedText);
                     });
 
         } catch (EmptyAuthException eae){
-            loadingComponent.hide();
+            loadingComponent.hideBalloon();
             new PopupLoader(e).showError(eae.getMessage());
         }
     }

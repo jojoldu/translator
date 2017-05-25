@@ -34,7 +34,7 @@ public class LoadingComponent {
         return panel;
     }
 
-    public void show(){
+    public void showBalloon(){
         Selector selector = new Selector(e);
         JComponent jComponent = selector.getCurrentComponent();
         Point point = selector.extractPoint();
@@ -49,7 +49,7 @@ public class LoadingComponent {
         }
     }
 
-    public void hide(){
+    public void hideBalloon(){
         balloon.hide();
     }
 

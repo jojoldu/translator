@@ -1,9 +1,19 @@
 package form.dialog;
 
+import action.TranslateAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.wm.WindowManager;
+import component.PopupLoader;
+import component.Selector;
+import config.ApiType;
+import exception.EmptyAuthException;
+import request.Auth;
+
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.concurrent.CompletableFuture;
 
-public class TranslateDialog extends JDialog {
+public class TranslateDialog extends JDialog implements TranslateAction {
     private JPanel contentPane;
     private JTextField queryTextField;
     private JButton queryBtn;
@@ -11,16 +21,33 @@ public class TranslateDialog extends JDialog {
     private JLabel translatedTextLabel;
     private JTextPane translatedTextPane;
 
-    public TranslateDialog() {
+    private static final String TITLE = "Translation";
+    private ApiType apiType;
+    private Auth auth;
+
+    public TranslateDialog(ApiType apiType, Auth auth) {
+        this.apiType = apiType;
+        this.auth = auth;
         init();
+        queryBtn.addActionListener(e -> onQuery());
+    }
+
+    public TranslateDialog(EmptyAuthException eae){
+        init();
+        translatedTextLabel.setText(eae.getMessage());
+    }
+
+    public void onShowing(AnActionEvent e){
+        this.pack();
+        this.setTitle(TITLE);
+        this.setLocationRelativeTo(WindowManager.getInstance().getFrame(e.getProject()).getRootPane().getParent());
+        this.setVisible(true);
     }
 
     private void init() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(queryBtn);
-
-        queryBtn.addActionListener(e -> onQuery());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -38,13 +65,18 @@ public class TranslateDialog extends JDialog {
     }
 
     private void onQuery() {
-        // add your code here
-        translatedTextLabel.setText(queryTextField.getText());
+
+        translatedTextLabel.setText("Querying....");
+        
+        String queryText = queryTextField.getText();
+
+        // 비동기 Action 실행
+        CompletableFuture.supplyAsync(() -> requestTranslate(queryText, auth, apiType))
+                .thenAccept(translatedText -> translatedTextLabel.setText(translatedText));
     }
 
     private void onCancel() {
         // add your code here if necessary
         dispose();
     }
-
 }
