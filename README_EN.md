@@ -19,6 +19,13 @@ shortcuts : ```option+2```
 
 ![에제2](./images/변경.gif)
 
+### Translate Dialog
+
+shortcuts : ```option+3```
+
+![예제3](./images/dialog.gif)
+
+
 ### Auto Selection
 
 #### Select Text
@@ -75,6 +82,8 @@ Please register ClientId and ClientSecret issued
 
 ## Release Notes
 
+* 0.0.10
+  * Translate Dialog
 * 0.0.9
   * Added default mode
 * 0.0.8

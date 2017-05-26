@@ -19,6 +19,12 @@
 
 ![에제2](./images/변경.gif)
 
+### 번역 Dialog
+
+단축키 : ```option+3```
+
+![예제3](./images/dialog.gif)
+
 ### 자동 선택모드 지원
 
 #### 영역 선택할 경우
@@ -75,6 +81,8 @@
 
 ## Release Notes
 
+* 0.0.10
+  * 번역 Dialog
 * 0.0.9
   * Default Mode 추가
 * 0.0.8
