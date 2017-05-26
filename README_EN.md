@@ -5,6 +5,12 @@
 Interpreting comments, finding variable names, and so on.
 We have begun to produce translation plug-ins because it is annoying to always open the Google translation window and the Naver dictionary.
 
+## Supported versions
+
+* IntelliJ 2017.1 or later
+* Android Studio 3.0.0 or later (current Canary version)
+* Other JetBrains IDE 2017.1 or later (WebStorm, PhpStorm ..)
+
 ## Usage
 
 ### Default Translate
