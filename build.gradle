@@ -28,7 +28,7 @@ intellij {
 }
 
 group 'org.intellij.plugin.jojoldu'
-version '0.0.10'
+version '0.0.11'
 description 'Translator for IntelliJ IDEA Korean User'
 
 dependencies {
