@@ -88,6 +88,8 @@ Please register ClientId and ClientSecret issued
 
 ## Release Notes
 
+* 0.0.12
+  * 2017.3 compatible
 * 0.0.11
   * 2017.2 compatible
 * 0.0.10
