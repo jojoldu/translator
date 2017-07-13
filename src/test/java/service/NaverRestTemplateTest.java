@@ -4,7 +4,6 @@ import config.AppConfig;
 import org.junit.Test;
 import request.Auth;
 import response.naver.NaverResponse;
-import service.impl.LanguageCheckerImpl;
 import service.impl.NaverRestTemplateImpl;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -24,7 +23,7 @@ public class NaverRestTemplateTest {
         NaverRestTemplateImpl restTemplate = new NaverRestTemplateImpl();
         Auth auth = Auth.newNaverInstance(AppConfig.getNaverClientId(), AppConfig.getNaverClientSecret());
         String requestBody = "source=ko&target=en&text=번역";
-        NaverResponse result = restTemplate.requestTranslate(requestBody, auth);
+        NaverResponse result = (NaverResponse) restTemplate.requestTranslate(requestBody, auth);
 
         //then
         assertThat(result.getTranslatedText(), is("translation"));

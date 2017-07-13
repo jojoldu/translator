@@ -73,6 +73,7 @@ public class NaverResponse implements TranslateResponse{
 
     public static class Result {
         private String translatedText;
+        private String srcLangType;
 
         public String getTranslatedText() {
             return translatedText;
@@ -80,6 +81,14 @@ public class NaverResponse implements TranslateResponse{
 
         public void setTranslatedText(String translatedText) {
             this.translatedText = translatedText;
+        }
+
+        public String getSrcLangType() {
+            return srcLangType;
+        }
+
+        public void setSrcLangType(String srcLangType) {
+            this.srcLangType = srcLangType;
         }
     }
 }
