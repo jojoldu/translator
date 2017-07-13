@@ -1,9 +1,15 @@
 package service.impl;
 
-import com.intellij.openapi.components.ServiceManager;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import request.Auth;
 import request.azure.AzureRequestParameter;
 import request.azure.AzureToken;
@@ -11,12 +17,6 @@ import response.TranslateResponse;
 import response.azure.AzureResponse;
 import service.AzureRestTemplate;
 import service.LanguageChecker;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.io.UnsupportedEncodingException;
-import java.time.LocalDateTime;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 3.
