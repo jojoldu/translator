@@ -56,7 +56,7 @@ public class AzureRestTemplateTest {
     public void 번역요청을하면_문자열이_전달된다() throws Exception {
         //given
         AzureRestTemplateImpl restApi = new AzureRestTemplateImpl();
-        String requestBody = AzureRequestParameter.Builder.builder()
+        String requestBody = AzureRequestParameter.builder()
                 .from("en")
                 .to("ko")
                 .text("brother")
@@ -72,7 +72,7 @@ public class AzureRestTemplateTest {
     public void 한글번역요청을하면_영문자열이_전달된다() throws Exception {
         //given
         AzureRestTemplateImpl restApi = new AzureRestTemplateImpl();
-        String requestBody = AzureRequestParameter.Builder.builder()
+        String requestBody = AzureRequestParameter.builder()
                 .from("ko")
                 .to("en")
                 .text("결제 승인")

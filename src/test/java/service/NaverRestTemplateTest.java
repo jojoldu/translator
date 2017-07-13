@@ -3,6 +3,7 @@ package service;
 import config.AppConfig;
 import org.junit.Test;
 import request.Auth;
+import response.TranslateResponse;
 import response.naver.NaverResponse;
 import service.impl.NaverRestTemplateImpl;
 
