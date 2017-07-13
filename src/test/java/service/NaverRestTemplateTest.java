@@ -23,7 +23,7 @@ public class NaverRestTemplateTest {
         NaverRestTemplateImpl restTemplate = new NaverRestTemplateImpl();
         Auth auth = Auth.newNaverInstance(AppConfig.getNaverClientId(), AppConfig.getNaverClientSecret());
         String requestBody = "source=ko&target=en&text=번역";
-        NaverResponse result = (NaverResponse) restTemplate.requestTranslate(requestBody, auth);
+        TranslateResponse result = restTemplate.requestTranslate(requestBody, auth);
 
         //then
         assertThat(result.getTranslatedText(), is("translation"));
