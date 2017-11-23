@@ -22,13 +22,13 @@ allprojects {
 }
 
 intellij {
-    version 'IC-2017.1' //IntelliJ IDEA 2017.1 dependency; for a full list of IntelliJ IDEA releases please see https://www.jetbrains.com/intellij-repository/releases
-    plugins 'coverage' //Bundled plugin dependencies
-    pluginName 'translator'
+    pluginName 'Translator'
+    updateSinceUntilBuild false
 }
 
+
 group 'org.intellij.plugin.jojoldu'
-version '0.0.10'
+version '0.0.14'
 description 'Translator for IntelliJ IDEA Korean User'
 
 dependencies {

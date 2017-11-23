@@ -36,7 +36,7 @@ public class AzureRestTemplateImpl implements AzureRestTemplate {
     public String createRequestData(LanguageChecker languageChecker, String text) throws UnsupportedEncodingException {
         String from = languageChecker.detect(text);
 
-        return AzureRequestParameter.Builder.builder()
+        return AzureRequestParameter.builder()
                 .text(text)
                 .from(from)
                 .to(languageChecker.exchange(from))

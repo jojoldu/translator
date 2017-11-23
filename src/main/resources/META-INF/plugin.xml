@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>org.intellij.plugin.jojoldu.translator</id>
   <name>Translator</name>
-  <version>0.0.10</version>
+  <version>0.0.14</version>
   <vendor email="jojoldu@gmail.com" url="https://github.com/jojoldu">jojoldu</vendor>
 
   <description><![CDATA[
@@ -25,24 +25,25 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      <a href="https://github.com/jojoldu/translator/tree/0.0.10"><b>v0.0.10</b></a> (2017-05-26) <br/><br/>
+      <a href="https://github.com/jojoldu/translator/tree/0.0.14"><b>v0.0.14</b></a> (2017-11-22) <br/><br/>
       <ul>
-        <li>0.0.1: Project initiate</li>
-        <li>0.0.2: Add Translate & Replace Feature</li>
-        <li>0.0.3: Bug Fix</li>
-        <li>0.0.4: Add Loading Popup</li>
-        <li>0.0.5: Add Auto Select Feature</li>
-        <li>0.0.6: Async Translate Event</li>
-        <li>0.0.7: Bug Fix</li>
-        <li>0.0.8: Add Naver Translate Api</li>
-        <li>0.0.9: Add Default Mode</li>
+        <li>0.0.14: IntelliJ Version Update (2017.1 to 2018.1)</li>
         <li>0.0.10: Add Translate Dialog</li>
+        <li>0.0.9: Add Default Mode</li>
+        <li>0.0.8: Add Naver Translate Api</li>
+        <li>0.0.7: Bug Fix</li>
+        <li>0.0.6: Async Translate Event</li>
+        <li>0.0.5: Add Auto Select Feature</li>
+        <li>0.0.4: Add Loading Popup</li>
+        <li>0.0.3: Bug Fix</li>
+        <li>0.0.2: Add Translate & Replace Feature</li>
+        <li>0.0.1: Project initiate</li>
       </ul>
     ]]>
   </change-notes>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="145.0"/>
+  <!-- from IDEA 2017.1 to IDEA 2018.1 -->
+  <idea-version since-build="171.3566.24" until-build="181.*" />
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->

@@ -88,6 +88,8 @@ Please register ClientId and ClientSecret issued
 
 ## Release Notes
 
+* 0.0.14
+  * Compatible since 2017.1 until 2018.1
 * 0.0.10
   * Translate Dialog
 * 0.0.9

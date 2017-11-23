@@ -48,7 +48,7 @@ public class NaverRestTemplateImpl implements NaverRestTemplate {
     @Override
     public String createRequestData(LanguageChecker languageChecker, String text) {
         String source = languageChecker.detect(text);
-        return NaverRequestParameter.Builder.builder()
+        return NaverRequestParameter.builder()
                 .source(source)
                 .target(languageChecker.exchange(source))
                 .text(text)

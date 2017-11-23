@@ -37,6 +37,10 @@ public class NaverRequestParameter implements RequestParameter{
         return text;
     }
 
+    public static Builder builder() {
+        return Builder.builder();
+    }
+
     public static final class Builder {
         private String source;
         private String target;

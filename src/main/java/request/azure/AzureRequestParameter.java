@@ -28,6 +28,10 @@ public class AzureRequestParameter implements RequestParameter {
         return "text="+text+"&from="+from+"&to="+to;
     }
 
+    public static Builder builder() {
+        return Builder.builder();
+    }
+
     public static final class Builder {
         private String text;
         private String from;
