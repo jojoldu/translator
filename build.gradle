@@ -21,8 +21,14 @@ allprojects {
     }
 }
 
+intellij {
+    pluginName 'Translator'
+    updateSinceUntilBuild false
+}
+
+
 group 'org.intellij.plugin.jojoldu'
-version '0.0.12'
+version '0.0.14'
 description 'Translator for IntelliJ IDEA Korean User'
 
 dependencies {

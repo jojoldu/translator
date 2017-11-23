@@ -7,9 +7,9 @@
 
 ## 지원 버전
 
-* IntelliJ 2016.1 이상
+* IntelliJ 2017.1 이상
 * 안드로이드 스튜디오 3.0.0 이상 (현재 Canary 버전)
-* 기타 JetBrains IDE 2016.1 이상 (WebStorm, PhpStorm..)
+* 기타 JetBrains IDE 2017.1 이상 (WebStorm, PhpStorm..)
 
 ## 사용법
 
@@ -87,10 +87,8 @@
 
 ## Release Notes
 
-* 0.0.12
-  * 버전 2016.1 이후 다 호환
-* 0.0.11
-  * 버전 2017.2 호환
+* 0.0.14
+  * 호환되는 버전 변경 (2017.1 ~ 2018.1) 
 * 0.0.10
   * 번역 Dialog
 * 0.0.9

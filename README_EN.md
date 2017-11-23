@@ -7,9 +7,9 @@ We have begun to produce translation plug-ins because it is annoying to always o
 
 ## Supported versions
 
-* IntelliJ 2016.1 or later
+* IntelliJ 2017.1 or later
 * Android Studio 3.0.0 or later (current Canary version)
-* Other JetBrains IDE 2016.1 or later (WebStorm, PhpStorm ..)
+* Other JetBrains IDE 2017.1 or later (WebStorm, PhpStorm ..)
 
 ## Usage
 
@@ -88,10 +88,8 @@ Please register ClientId and ClientSecret issued
 
 ## Release Notes
 
-* 0.0.12
-  * Compatible since 2016.1
-* 0.0.11
-  * 2017.2 compatible
+* 0.0.14
+  * Compatible since 2017.1 until 2018.1
 * 0.0.10
   * Translate Dialog
 * 0.0.9
