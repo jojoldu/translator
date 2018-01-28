@@ -1,5 +1,8 @@
 # Translator IntelliJ Plugin(for Korean)
 
+[![JetBrains plugins](https://img.shields.io/jetbrains/plugin/d/Translator.svg)]()
+[![JetBrains Plugins](https://img.shields.io/jetbrains/plugin/v/Translator.svg)]()
+
 [Korean](./README.md) | [English](./README_EN.md)  
 
 Interpreting comments, finding variable names, and so on.
