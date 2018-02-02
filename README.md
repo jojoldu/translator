@@ -65,7 +65,7 @@
   * **월 200만**건까지 무료
   * 키 발급이 조금 귀찮은 면이 있습니다.
   * 해외분들에게 추천합니다.
-* [네아버 API](http://blog.naver.com/PostView.nhn?blogId=killkimno&logNo=220647426967)
+* [네이버 API](http://blog.naver.com/PostView.nhn?blogId=killkimno&logNo=220647426967)
   * **하루 1만**건까지 무료
   * 키 발급이 정말 간단합니다.
   * 국내 분들에게 추천합니다.
