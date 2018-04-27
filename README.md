@@ -18,19 +18,19 @@
 
 ### 기본 번역
 
-단축키 : ```option+1```
+단축키 : ```option+1``` ```alt+1(win)```
 
 ![예제1](./images/번역.gif)
 
 ### 번역 및 변환
 
-단축키 : ```option+2```
+단축키 : ```option+2``` ```alt+2(win)```
 
 ![에제2](./images/변경.gif)
 
 ### 번역 Dialog
 
-단축키 : ```option+3```
+단축키 : ```option+3``` ```alt+3(win)```
 
 ![예제3](./images/dialog.gif)
 
