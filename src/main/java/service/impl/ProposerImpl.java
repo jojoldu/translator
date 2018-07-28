@@ -1,7 +1,6 @@
 package service.impl;
 
 import com.google.common.base.CaseFormat;
-import com.intellij.openapi.components.ServiceManager;
 import service.LanguageChecker;
 import service.Proposer;
 
@@ -17,16 +16,16 @@ import java.util.List;
 
 public class ProposerImpl implements Proposer{
 
-    public List<String> propose(String text) {
-        if(isEnglish(text)){
+    public List<String> propose(String text, LanguageChecker languageChecker) {
+        if(isEnglish(text, languageChecker)){
             return createPropositions(text.replaceAll(" ", "_").toLowerCase());
         }
 
         return Collections.singletonList(text);
     }
 
-    private boolean isEnglish(String text) {
-        return ServiceManager.getService(LanguageChecker.class).detect(text).equals("en");
+    private boolean isEnglish(String text, LanguageChecker languageChecker) {
+        return languageChecker.detect(text).equals("en");
     }
 
     private List<String> createPropositions(String text){

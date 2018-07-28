@@ -1,6 +1,8 @@
 package util;
 
 import org.junit.Test;
+import service.LanguageChecker;
+import service.impl.LanguageCheckerImpl;
 import service.impl.ProposerImpl;
 
 import java.util.List;
@@ -21,7 +23,10 @@ public class ProposerTest {
     public void 영문은_카멜케이스_언더스코어로_전환한_리스트를_반환한다() throws Exception {
         //given
         String val = "get order status";
-        List<String> results = proposer.propose(val);
+        LanguageChecker languageChecker = new LanguageCheckerImpl();
+
+        //when
+        List<String> results = proposer.propose(val, languageChecker);
 
         //then
         assertThat(results.size(), is(4));

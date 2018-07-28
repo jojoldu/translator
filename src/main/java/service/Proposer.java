@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface Proposer {
-    List<String> propose(String text);
+    List<String> propose(String text, LanguageChecker languageChecker);
 }

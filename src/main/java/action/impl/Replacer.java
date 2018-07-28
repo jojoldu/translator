@@ -11,6 +11,7 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.editor.Editor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.LanguageChecker;
 import service.Proposer;
 
 /**
@@ -40,7 +41,7 @@ public class Replacer extends InstantTranslateAction {
     private LookupElement[] getProposeList(String text){
         Proposer proposer = ServiceManager.getService(Proposer.class);
 
-        return proposer.propose(text).stream()
+        return proposer.propose(text, ServiceManager.getService(LanguageChecker.class)).stream()
                 .map(LookupElementBuilder::create)
                 .toArray(LookupElement[]::new);
     }
