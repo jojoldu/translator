@@ -20,6 +20,9 @@ apply plugin: 'java'
 apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'jacoco'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 allprojects {
     repositories {
         mavenCentral()
@@ -30,16 +33,30 @@ allprojects {
 intellij {
     pluginName 'Translator'
     updateSinceUntilBuild false
+    publishPlugin {
+        username intellijPublishUsername
+        password intellijPublishPassword
+    }
 }
 
+//gradle.properties 테스트
+task printProps {
+    doLast {
+        println intellijPublishUsername
+        println intellijPublishPassword
+    }
+}
 
 group 'org.intellij.plugin.jojoldu'
 version '0.0.15'
 description 'Translator for IntelliJ IDEA Korean User'
 
-publishPlugin {
-    username intellijPublishUsername
-    password intellijPublishPassword
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }
 
 dependencies {

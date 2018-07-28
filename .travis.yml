@@ -13,7 +13,10 @@ cache:
   - '$HOME/.gradle'
 
 # clean 후 Build (Build시 자동으로 test 수행)
-script: "./gradlew clean build"
+script: "./gradlew clean test"
+
+after_success:
+- ./gradlew jacocoTestReport coveralls
 
 notifications:
   webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
