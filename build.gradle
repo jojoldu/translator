@@ -4,6 +4,9 @@ buildscript {
         jcenter()
         maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
     }
+    dependencies {
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
+    }
 }
 
 plugins {
@@ -11,10 +14,11 @@ plugins {
     id "org.jetbrains.intellij" version "0.3.5"
 }
 
-
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
+apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'jacoco'
 
 allprojects {
     repositories {

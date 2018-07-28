@@ -2,6 +2,8 @@
 
 [![JetBrains plugins](https://img.shields.io/jetbrains/plugin/d/Translator.svg)]()
 [![JetBrains Plugins](https://img.shields.io/jetbrains/plugin/v/Translator.svg)]()
+[![Build Status](https://travis-ci.org/jojoldu/translator.svg?branch=master)](https://travis-ci.org/jojoldu/translator)
+[![Coverage Status](https://coveralls.io/repos/github/jojoldu/translator/badge.svg?branch=master)](https://coveralls.io/github/jojoldu/translator?branch=master)
 
 [Korean](./README.md) | [English](./README_EN.md)  
 
