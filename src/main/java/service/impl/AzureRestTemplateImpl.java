@@ -2,14 +2,6 @@ package service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.UnsupportedEncodingException;
-import java.time.LocalDateTime;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import request.Auth;
 import request.azure.AzureRequestParameter;
 import request.azure.AzureToken;
@@ -17,6 +9,13 @@ import response.TranslateResponse;
 import response.azure.AzureResponse;
 import service.AzureRestTemplate;
 import service.LanguageChecker;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 3.
@@ -45,7 +44,7 @@ public class AzureRestTemplateImpl implements AzureRestTemplate {
     }
 
     @Override
-    public TranslateResponse requestTranslate(String requestBody, Auth auth) {
+    public Optional<TranslateResponse> requestTranslate(String requestBody, Auth auth) {
         String token = issueToken(auth.getAzure().getSecretKey());
 
         Response response = createWebTarget(TRANSLATE_URL+requestBody)
@@ -55,10 +54,10 @@ public class AzureRestTemplateImpl implements AzureRestTemplate {
 
         if(response.getStatus() != 200){
             logger.error("Translate Request Exception : {}", response.getStatusInfo().getReasonPhrase());
-            return null;
+            return Optional.empty();
         }
 
-        return new AzureResponse(response.readEntity(String.class));
+        return Optional.of(new AzureResponse(response.readEntity(String.class)));
     }
 
     @Override

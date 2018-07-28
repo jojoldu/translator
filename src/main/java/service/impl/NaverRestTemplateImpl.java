@@ -2,17 +2,17 @@ package service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import request.Auth;
 import request.naver.NaverRequestParameter;
 import response.TranslateResponse;
 import response.naver.NaverResponse;
 import service.LanguageChecker;
 import service.NaverRestTemplate;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.Optional;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 19.
@@ -25,9 +25,8 @@ public class NaverRestTemplateImpl implements NaverRestTemplate {
 
     private static final String TRANSLATE_URL = "https://openapi.naver.com/v1/language/translate";
 
-
     @Override
-    public TranslateResponse requestTranslate(String requestBody, Auth auth) {
+    public Optional<TranslateResponse> requestTranslate(String requestBody, Auth auth) {
         Auth.Naver naverAuth = auth.getNaver();
 
         Response response = createWebTarget(TRANSLATE_URL)
@@ -39,10 +38,10 @@ public class NaverRestTemplateImpl implements NaverRestTemplate {
 
         if(response.getStatus() != 200){
             logger.error("Translate Request Exception : {}", response.readEntity(String.class));
-            return null;
+            return Optional.empty();
         }
 
-        return response.readEntity(NaverResponse.class);
+        return Optional.of(response.readEntity(NaverResponse.class));
     }
 
     @Override

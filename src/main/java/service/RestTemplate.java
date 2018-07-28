@@ -9,6 +9,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import java.io.UnsupportedEncodingException;
+import java.util.Optional;
 
 /**
  * Created by jojoldu@gmail.com on 2017. 5. 19.
@@ -17,7 +18,7 @@ import java.io.UnsupportedEncodingException;
  */
 
 public interface RestTemplate {
-    TranslateResponse requestTranslate(String requestBody, Auth auth);
+    Optional<TranslateResponse> requestTranslate(String requestBody, Auth auth);
     String createRequestData(LanguageChecker languageChecker, String text) throws UnsupportedEncodingException;
 
     default WebTarget createWebTarget(String url) {
@@ -29,12 +30,9 @@ public interface RestTemplate {
     default String translate(String text, Auth auth) throws UnsupportedEncodingException {
         LanguageChecker languageChecker = ServiceManager.getService(LanguageChecker.class);
         String requestBody = createRequestData(languageChecker, text);
-        TranslateResponse response = requestTranslate(requestBody, auth);
-        if(response != null){
-            return response.getTranslatedText();
-        }
-
-        return text;
+        return requestTranslate(requestBody, auth)
+                .map(TranslateResponse::getTranslatedText)
+                .orElse(text);
     }
 
 }

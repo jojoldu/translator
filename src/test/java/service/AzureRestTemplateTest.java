@@ -62,7 +62,7 @@ public class AzureRestTemplateTest {
                 .text("brother")
                 .build()
                 .toUrlParameter();
-        TranslateResponse result = restApi.requestTranslate(requestBody, auth);
+        TranslateResponse result = restApi.requestTranslate(requestBody, auth).get();
 
         //then
         assertThat(result.getTranslatedText(), is("동생"));
@@ -78,7 +78,7 @@ public class AzureRestTemplateTest {
                 .text("결제 승인")
                 .build()
                 .toUrlParameter();
-        TranslateResponse result = restApi.requestTranslate(requestBody, auth);
+        TranslateResponse result = restApi.requestTranslate(requestBody, auth).get();
 
         //then
         assertThat(result.getTranslatedText(), is("Payment approval"));
