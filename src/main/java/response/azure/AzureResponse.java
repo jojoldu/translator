@@ -1,5 +1,6 @@
 package response.azure;
 
+import lombok.AllArgsConstructor;
 import response.TranslateResponse;
 import util.MessageConverter;
 
@@ -9,13 +10,10 @@ import util.MessageConverter;
  * Github : http://github.com/jojoldu
  */
 
+@AllArgsConstructor
 public class AzureResponse implements TranslateResponse{
 
     private String xmlResult;
-
-    public AzureResponse(String xmlResult) {
-        this.xmlResult = xmlResult;
-    }
 
     @Override
     public String getTranslatedText() {

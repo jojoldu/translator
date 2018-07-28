@@ -1,6 +1,9 @@
 package response.naver;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import response.TranslateResponse;
 
 /**
@@ -9,6 +12,8 @@ import response.TranslateResponse;
  * Github : http://github.com/jojoldu
  */
 
+@Getter
+@Setter
 public class NaverResponse implements TranslateResponse{
 
     private Message message;
@@ -16,14 +21,6 @@ public class NaverResponse implements TranslateResponse{
     @Override
     public String getTranslatedText() {
         return message.getResult().getTranslatedText();
-    }
-
-    public Message getMessage() {
-        return message;
-    }
-
-    public void setMessage(Message message) {
-        this.message = message;
     }
 
     public static class Message {
@@ -71,24 +68,11 @@ public class NaverResponse implements TranslateResponse{
         }
     }
 
+    @NoArgsConstructor
+    @Getter
+    @Setter
     public static class Result {
         private String translatedText;
         private String srcLangType;
-
-        public String getTranslatedText() {
-            return translatedText;
-        }
-
-        public void setTranslatedText(String translatedText) {
-            this.translatedText = translatedText;
-        }
-
-        public String getSrcLangType() {
-            return srcLangType;
-        }
-
-        public void setSrcLangType(String srcLangType) {
-            this.srcLangType = srcLangType;
-        }
     }
 }

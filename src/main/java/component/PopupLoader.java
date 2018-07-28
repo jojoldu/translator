@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class PopupLoader {
 
-    private Selector selector;
+    private final Selector selector;
     private final JComponent jComponent;
     private final Point point;
 

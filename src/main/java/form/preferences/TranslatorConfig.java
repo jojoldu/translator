@@ -6,6 +6,9 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -14,6 +17,9 @@ import org.jetbrains.annotations.Nullable;
  * Github : http://github.com/jojoldu
  */
 
+@Getter
+@Setter
+@NoArgsConstructor
 @State(
         name="TranslatorConfig",
         storages = {
@@ -25,8 +31,6 @@ public class TranslatorConfig implements PersistentStateComponent<TranslatorConf
     private String azureSecretKey = "";
     private String naverClientId = "";
     private String naverClientSecret = "";
-
-    public TranslatorConfig() {}
 
     @Nullable
     @Override
@@ -42,37 +46,4 @@ public class TranslatorConfig implements PersistentStateComponent<TranslatorConf
     public static TranslatorConfig getInstance(Project project){
         return ServiceManager.getService(project, TranslatorConfig.class);
     }
-
-    public String getApiType() {
-        return apiType;
-    }
-
-    public void setApiType(String apiType) {
-        this.apiType = apiType;
-    }
-
-    public String getAzureSecretKey() {
-        return azureSecretKey;
-    }
-
-    public void setAzureSecretKey(String azureSecretKey) {
-        this.azureSecretKey = azureSecretKey;
-    }
-
-    public String getNaverClientId() {
-        return naverClientId;
-    }
-
-    public void setNaverClientId(String naverClientId) {
-        this.naverClientId = naverClientId;
-    }
-
-    public String getNaverClientSecret() {
-        return naverClientSecret;
-    }
-
-    public void setNaverClientSecret(String naverClientSecret) {
-        this.naverClientSecret = naverClientSecret;
-    }
-
 }

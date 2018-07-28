@@ -9,8 +9,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.editor.Editor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import service.LanguageChecker;
 import service.Proposer;
 
@@ -20,9 +19,8 @@ import service.Proposer;
  * Github : http://github.com/jojoldu
  */
 
+@Slf4j
 public class Replacer extends InstantTranslateAction {
-    private static final Logger logger = LoggerFactory.getLogger(Replacer.class);
-
     private Editor editor;
 
     @Override

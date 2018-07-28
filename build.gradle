@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
         maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
     }
@@ -17,6 +18,7 @@ apply plugin: 'java'
 
 allprojects {
     repositories {
+        mavenCentral()
         jcenter()
     }
 }
@@ -41,7 +43,7 @@ dependencies {
     compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.25.1'
 
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
-    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile group: 'com.optimaize.languagedetector', name: 'language-detector', version: '0.6'
     compile group: 'com.google.guava', name: 'guava', version: '21.0'

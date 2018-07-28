@@ -1,5 +1,8 @@
 package request.naver;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import request.RequestParameter;
 
 /**
@@ -8,7 +11,10 @@ import request.RequestParameter;
  * Github : http://github.com/jojoldu
  */
 
-public class NaverRequestParameter implements RequestParameter{
+@Builder
+@Getter
+@NoArgsConstructor
+public class NaverRequestParameter implements RequestParameter {
 
     private String source;
     private String target;
@@ -25,51 +31,4 @@ public class NaverRequestParameter implements RequestParameter{
         return "source="+source+"&target="+target+"&text="+text;
     }
 
-    public String getSource() {
-        return source;
-    }
-
-    public String getTarget() {
-        return target;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public static Builder builder() {
-        return Builder.builder();
-    }
-
-    public static final class Builder {
-        private String source;
-        private String target;
-        private String text;
-
-        private Builder() {
-        }
-
-        public static Builder builder() {
-            return new Builder();
-        }
-
-        public Builder source(String source) {
-            this.source = source;
-            return this;
-        }
-
-        public Builder target(String target) {
-            this.target = target;
-            return this;
-        }
-
-        public Builder text(String text) {
-            this.text = text;
-            return this;
-        }
-
-        public NaverRequestParameter build() {
-            return new NaverRequestParameter(source, target, text);
-        }
-    }
 }

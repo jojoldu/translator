@@ -1,5 +1,8 @@
 package request.azure;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
 /**
@@ -8,23 +11,17 @@ import java.time.LocalDateTime;
  * Github : http://github.com/jojoldu
  */
 
+@Getter
+@AllArgsConstructor
 public class AzureToken {
+
+    private static final long INTERVAL_TIME = 10;
 
     private LocalDateTime createTime;
     private String token;
 
-    private static final long INTERVAL_TIME = 10;
 
     public boolean isExpired(LocalDateTime currentTime){
         return currentTime.isAfter(createTime.plusMinutes(INTERVAL_TIME));
-    }
-
-    public AzureToken(LocalDateTime createTime, String token) {
-        this.createTime = createTime;
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
     }
 }

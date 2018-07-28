@@ -4,15 +4,15 @@ import action.TranslateAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.util.ui.UIUtil;
-import component.PopupLoader;
-import component.Selector;
 import config.ApiType;
 import exception.EmptyAuthException;
 import request.Auth;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.concurrent.CompletableFuture;
 
 public class TranslateDialog extends JDialog implements TranslateAction {
@@ -21,7 +21,6 @@ public class TranslateDialog extends JDialog implements TranslateAction {
     private JButton queryBtn;
     private JPanel translatedPane;
     private JLabel translatedTextLabel;
-    private JTextPane translatedTextPane;
 
     private static final String TITLE = "Translation";
     private ApiType apiType;
@@ -98,7 +97,6 @@ public class TranslateDialog extends JDialog implements TranslateAction {
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 }

@@ -1,7 +1,6 @@
 package service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import request.Auth;
 import request.naver.NaverRequestParameter;
 import response.TranslateResponse;
@@ -20,9 +19,8 @@ import java.util.Optional;
  * Github : http://github.com/jojoldu
  */
 
+@Slf4j
 public class NaverRestTemplateImpl implements NaverRestTemplate {
-    private static final Logger logger = LoggerFactory.getLogger(NaverRestTemplateImpl.class);
-
     private static final String TRANSLATE_URL = "https://openapi.naver.com/v1/language/translate";
 
     @Override
@@ -37,7 +35,7 @@ public class NaverRestTemplateImpl implements NaverRestTemplate {
                 .post(Entity.entity(requestBody, MediaType.APPLICATION_FORM_URLENCODED_TYPE), Response.class);
 
         if(response.getStatus() != 200){
-            logger.error("Translate Request Exception : {}", response.readEntity(String.class));
+            log.error("Translate Request Exception : {}", response.readEntity(String.class));
             return Optional.empty();
         }
 

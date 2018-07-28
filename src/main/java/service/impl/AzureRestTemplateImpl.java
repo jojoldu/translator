@@ -1,7 +1,6 @@
 package service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import request.Auth;
 import request.azure.AzureRequestParameter;
 import request.azure.AzureToken;
@@ -23,8 +22,8 @@ import java.util.Optional;
  * Github : http://github.com/jojoldu
  */
 
+@Slf4j
 public class AzureRestTemplateImpl implements AzureRestTemplate {
-    private static final Logger logger = LoggerFactory.getLogger(AzureRestTemplateImpl.class);
 
     private static final String TOKEN_URL = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=";
     private static final String TRANSLATE_URL = "https://api.microsofttranslator.com/V2/Http.svc/Translate?";
@@ -53,7 +52,7 @@ public class AzureRestTemplateImpl implements AzureRestTemplate {
                     .get(Response.class);
 
         if(response.getStatus() != 200){
-            logger.error("Translate Request Exception : {}", response.getStatusInfo().getReasonPhrase());
+            log.error("Translate Request Exception : {}", response.getStatusInfo().getReasonPhrase());
             return Optional.empty();
         }
 

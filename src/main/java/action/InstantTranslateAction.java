@@ -6,8 +6,7 @@ import component.PopupLoader;
 import component.Selector;
 import config.ApiType;
 import exception.EmptyAuthException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import request.Auth;
 import ui.icon.LoadingComponent;
 
@@ -19,9 +18,8 @@ import java.util.concurrent.CompletableFuture;
  * Github : http://github.com/jojoldu
  */
 
+@Slf4j
 public abstract class InstantTranslateAction extends AnAction implements TranslateAction {
-
-    private static final Logger logger = LoggerFactory.getLogger(InstantTranslateAction.class);
 
     @Override
     public void actionPerformed(AnActionEvent e) {

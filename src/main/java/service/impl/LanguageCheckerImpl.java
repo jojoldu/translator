@@ -1,6 +1,5 @@
 package service.impl;
 
-import service.LanguageChecker;
 import com.google.common.base.Optional;
 import com.optimaize.langdetect.LanguageDetector;
 import com.optimaize.langdetect.LanguageDetectorBuilder;
@@ -10,8 +9,8 @@ import com.optimaize.langdetect.profiles.LanguageProfileReader;
 import com.optimaize.langdetect.text.CommonTextObjectFactories;
 import com.optimaize.langdetect.text.TextObject;
 import com.optimaize.langdetect.text.TextObjectFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import service.LanguageChecker;
 
 import java.io.IOException;
 
@@ -21,8 +20,8 @@ import java.io.IOException;
  * Github : http://github.com/jojoldu
  */
 
+@Slf4j
 public class LanguageCheckerImpl implements LanguageChecker {
-    private static final Logger logger = LoggerFactory.getLogger(LanguageCheckerImpl.class);
 
     private LanguageDetector languageDetector;
     private TextObjectFactory textObjectFactory;
@@ -34,7 +33,7 @@ public class LanguageCheckerImpl implements LanguageChecker {
                     .withProfiles(new LanguageProfileReader().readAllBuiltIn()) //load all languages:
                     .build();
         } catch (IOException e) {
-            logger.error("LanguageCheckerImpl {}", e.getMessage());
+            log.error("LanguageCheckerImpl {}", e.getMessage());
         }
 
         //create a text object factory
