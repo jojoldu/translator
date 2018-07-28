@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>org.intellij.plugin.jojoldu.translator</id>
   <name>Translator</name>
-  <version>0.0.14</version>
+  <version>0.0.15</version>
   <vendor email="jojoldu@gmail.com" url="https://github.com/jojoldu">jojoldu</vendor>
 
   <description><![CDATA[
@@ -25,8 +25,9 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      <a href="https://github.com/jojoldu/translator/tree/0.0.14"><b>v0.0.14</b></a> (2017-11-22) <br/><br/>
+      <a href="https://github.com/jojoldu/translator/tree/0.0.15"><b>v0.0.15</b></a> (2018-07-28) <br/><br/>
       <ul>
+        <li>0.0.15: IntelliJ Version Update (2018.1 to Unlimit)</li>
         <li>0.0.14: IntelliJ Version Update (2017.1 to 2018.1)</li>
         <li>0.0.10: Add Translate Dialog</li>
         <li>0.0.9: Add Default Mode</li>
@@ -42,8 +43,8 @@
     ]]>
   </change-notes>
 
-  <!-- from IDEA 2017.1 to IDEA 2018.1 -->
-  <idea-version since-build="171.3566.24" until-build="181.*" />
+  <!-- from IDEA 2017.1 to Unlimit -->
+  <idea-version since-build="171.*" />
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
